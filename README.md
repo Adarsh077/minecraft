@@ -5,7 +5,40 @@ pack**, into an existing Minecraft/TLauncher game directory. **Java is not requi
 any point — the scripts never download or run the `fabric-installer` jar; they fetch the
 Fabric loader profile JSON directly from Fabric's meta API instead.
 
-## Usage
+## Quick install (run from anywhere, nothing to clone)
+
+**Linux and macOS** — same command on both:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/Adarsh077/minecraft/main/install.sh | sh
+```
+
+**Windows** (PowerShell):
+
+```powershell
+irm https://raw.githubusercontent.com/Adarsh077/minecraft/main/install.ps1 | iex
+```
+
+### With shaders
+
+To also install Iris and a shader pack, the flag has to be passed through to the
+piped script:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/Adarsh077/minecraft/main/install.sh | sh -s -- --shaders
+```
+
+```powershell
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/Adarsh077/minecraft/main/install.ps1))) -Shaders
+```
+
+Any other flag from the table below works the same way — `sh -s -- <flags>` on
+Linux/macOS, and the `scriptblock` form on Windows.
+
+## Usage from a clone
+
+If you'd rather read the script before running it (piping a URL into a shell runs
+whatever the server sends, so this is the cautious option):
 
 ### Linux / macOS
 
@@ -16,8 +49,8 @@ chmod +x install.sh
 
 ### Windows
 
-The script is signed by nothing, so PowerShell's default execution policy will block it.
-Run it explicitly with the bypass flag:
+The script is signed by nothing, so PowerShell's default execution policy will block it
+when run from a file. Run it explicitly with the bypass flag:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install.ps1
