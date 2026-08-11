@@ -1,149 +1,81 @@
-# Fabric Friends Installer
+# Minecraft Fabric 1.21.11 — Friends Modpack Installer
 
-One-shot installer for **Fabric loader 0.19.3 + Minecraft 1.21.11 + a fixed 23-mod client
-pack**, into an existing Minecraft/TLauncher game directory. **Java is not required** at
-any point — the scripts never download or run the `fabric-installer` jar; they fetch the
-Fabric loader profile JSON directly from Fabric's meta API instead.
+One command. Installs Fabric loader + all 23 mods. **No Java needed.**
 
-## Quick install (run from anywhere, nothing to clone)
+## Install — with shaders
 
-**Linux and macOS** — same command on both:
-
-```sh
-curl -fsSL https://raw.githubusercontent.com/Adarsh077/minecraft/main/install.sh | sh
-```
-
-**Windows** (PowerShell):
-
-```powershell
-irm https://raw.githubusercontent.com/Adarsh077/minecraft/main/install.ps1 | iex
-```
-
-### With shaders
-
-To also install Iris and a shader pack, the flag has to be passed through to the
-piped script:
+**Linux / macOS**
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/Adarsh077/minecraft/main/install.sh | sh -s -- --shaders
 ```
 
+**Windows** (PowerShell)
+
 ```powershell
 & ([scriptblock]::Create((irm https://raw.githubusercontent.com/Adarsh077/minecraft/main/install.ps1))) -Shaders
 ```
 
-Any other flag from the table below works the same way — `sh -s -- <flags>` on
-Linux/macOS, and the `scriptblock` form on Windows.
+## Install — without shaders
 
-## Usage from a clone
-
-If you'd rather read the script before running it (piping a URL into a shell runs
-whatever the server sends, so this is the cautious option):
-
-### Linux / macOS
+**Linux / macOS**
 
 ```sh
-chmod +x install.sh
-./install.sh
+curl -fsSL https://raw.githubusercontent.com/Adarsh077/minecraft/main/install.sh | sh
 ```
 
-### Windows
-
-The script is signed by nothing, so PowerShell's default execution policy will block it
-when run from a file. Run it explicitly with the bypass flag:
+**Windows** (PowerShell)
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\install.ps1
+irm https://raw.githubusercontent.com/Adarsh077/minecraft/main/install.ps1 | iex
 ```
 
-## Flags
+## Then
 
-| sh | PowerShell | Meaning |
+1. Launch **vanilla 1.21.11** once first if you never have — that downloads sounds and assets.
+2. In your launcher pick version **`fabric-loader-0.19.3-1.21.11`**.
+   TLauncher hides it until you enable *custom / other versions* in the version dropdown settings.
+3. Multiplayer → add the server address.
+
+Shaders: Options → Video Settings → Shader Packs → pick one → Apply.
+
+**Do not install OptiFine.** Sodium is already included and conflicts with it.
+
+## What you get
+
+| | |
+|---|---|
+| Loader | Fabric 0.19.3, Minecraft 1.21.11 |
+| Mods | 23 jars, versions pinned and SHA-256 verified |
+| Performance | Sodium, Lithium, FerriteCore |
+| Client | JEI, Jade, Inventory Profiles Next |
+| Gameplay | Waystones, Biomes O' Plenty, Farmer's Delight, Traveler's Backpack, Storage Drawers, Carry On, Adorn, MDM, Fantastic Wings |
+| With shaders | Iris + Sodium 0.8.7 + Complementary Unbound |
+
+Everyone on the server needs the same mods, or you get kicked on join.
+Shaders are client-only — safe to enable or skip individually.
+
+## Options
+
+| Linux / macOS | Windows | Meaning |
 |---|---|---|
-| `--dir PATH` | `-Dir PATH` | Use a custom game directory instead of the default `.minecraft` |
-| `--zip PATH` | `-Zip PATH` | Use a local copy of the mod pack zip instead of downloading it |
-| `--shaders` | `-Shaders` | Also install Iris + a shader pack (client-visual only, see below) |
-| `--no-shaders` | `-NoShaders` | Remove Iris + the shader Sodium build, and restore base Sodium |
+| `--shaders` | `-Shaders` | Also install Iris + a shader pack |
+| `--no-shaders` | `-NoShaders` | Remove Iris, restore base Sodium |
+| `--dir PATH` | `-Dir PATH` | Custom game directory |
+| `--zip PATH` | `-Zip PATH` | Use a local pack zip instead of downloading |
 
-`--shaders`/`-Shaders` and `--no-shaders`/`-NoShaders` cannot be given together; the
-installer exits with an error if both are passed.
+Default game directory: `~/.minecraft` (Linux), `~/Library/Application Support/minecraft` (macOS), `%APPDATA%\.minecraft` (Windows).
 
-Default game directory:
-- Linux: `$HOME/.minecraft`
-- macOS: `$HOME/Library/Application Support/minecraft`
-- Windows: `%APPDATA%\.minecraft`
+## Notes
 
-## Before you run it
+**Re-running is safe.** Nothing already correct is re-downloaded; corrupt or missing jars
+are replaced automatically. Once shaders are installed, a plain re-run keeps them — use
+`--no-shaders` to remove them.
 
-Launch **vanilla Minecraft 1.21.11** once from your launcher first, so the game's assets
-(sounds, language files, etc.) download normally. The installer only places the version
-JSON/jar, the loader profile, and the mods — it does not fetch assets.
+**Iris pins Sodium 0.8.7**, older than the `0.8.14-beta.2` the base pack ships, so the
+shader install swaps it. Two Sodium jars would crash the game, and the installer fails
+loudly rather than letting that happen.
 
-## After it finishes
-
-The script prints the version id to select (`fabric-loader-0.19.3-1.21.11`). It also tries
-to register a `fabric-loader-1.21.11` entry in `launcher_profiles.json` automatically. If
-TLauncher doesn't show it in the dropdown, make sure **custom/other versions** are enabled
-in TLauncher's version list settings, then pick it manually.
-
-## Optional shaders (`--shaders` / `-Shaders`)
-
-Passing this flag additionally installs **Iris** and the **Complementary Unbound**
-shader pack. This is purely client-visual and does not affect compatibility with
-other players on the server.
-
-Iris 1.10.7 hard-pins Sodium `0.8.7`, which is older than the `0.8.14-beta.2` the
-base pack ships. When `--shaders`/`-Shaders` is used, the installer removes
-`sodium-fabric-0.8.14-beta.2+mc1.21.11.jar` from `mods/` and installs
-`sodium-fabric-0.8.7+mc1.21.11.jar` instead — without this swap Iris refuses to
-load. The shader pack itself is placed in `shaderpacks/`, not `mods/`. With
-`--shaders`/`-Shaders` the final verification checks 24 jars in `mods/` (23 base +
-Iris, with Sodium swapped to `0.8.7`) instead of 23.
-
-**Shader mode is sticky.** If Iris is already installed in `mods/` and you re-run
-the installer with neither `--shaders`/`-Shaders` nor `--no-shaders`/`-NoShaders`,
-the installer detects the existing Iris jar and keeps shaders enabled — it will
-never leave you with two Sodium jars at once just because a plain re-run assumed
-a fresh, non-shader install. To go back to the base (non-shader) pack, pass
-`--no-shaders`/`-NoShaders` explicitly.
-
-## Removing shaders (`--no-shaders` / `-NoShaders`)
-
-Passing this flag removes `iris-fabric-*.jar` and the shader Sodium build
-(`sodium-fabric-0.8.7*.jar`) from `mods/`, and restores the base
-`sodium-fabric-0.8.14-beta.2+mc1.21.11.jar`, ending back at the 23-jar base
-manifest. It leaves `shaderpacks/` untouched — shader-pack zips are harmless
-sitting on disk even without Iris, and you may want to keep them for later;
-delete that directory manually if you don't.
-
-## Duplicate-mod protection
-
-Before the final verification, the installer checks `mods/` for two files
-belonging to the same mod (for example, both Sodium builds present at once) and
-**hard-fails with a nonzero exit code** if it finds one, naming both files and
-which one to delete — this check runs first, so it also catches a duplicate
-Sodium jar you (or another tool) dropped in by hand. Two versions of the same
-mod loaded together crashes the game on launch.
-
-Separately, the installer's own shader/no-shader logic keeps exactly one Sodium
-jar as part of switching modes: `--shaders`/`-Shaders` and `--no-shaders`/
-`-NoShaders` (and the sticky-mode detection above) each remove the Sodium build
-their mode doesn't want before the duplicate check ever runs, so a normal mode
-switch never trips it. A single unrecognized extra jar that isn't part of the
-pack only produces a warning; `tl_skin_cape*.jar` files are always left alone
-and never flagged.
-
-## Do not add OptiFine
-
-The pack already includes **Sodium** for rendering performance. Installing OptiFine
-alongside it will conflict — do not add it.
-
-## Re-running
-
-The installer is idempotent: re-running it will not re-download anything that already
-verifies against its expected hash. In particular, if all 18 bundled pack jars are
-already present in `mods/` and match their expected hashes, the installer skips
-downloading/extracting the pack zip entirely (no ~27MB Google Drive fetch on a
-routine re-run) — it only fetches and re-extracts the zip when at least one bundled
-jar is missing or corrupted, and it still repairs just that jar from the zip in
-that case.
+**Prefer to read it first?** Piping a URL into a shell runs whatever the server sends.
+Clone instead, then `sh install.sh --shaders`, or on Windows
+`powershell -ExecutionPolicy Bypass -File .\install.ps1 -Shaders`.
