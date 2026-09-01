@@ -22,6 +22,9 @@ $PackZipUrl = "https://drive.usercontent.google.com/download?id=1xrjCldCkGCgfdKu
 $PackZipSha256 = "1c0a7c9fb578d459bf236cc5d9dad597f18fa1b6581486186fdd63ba0e2709d1"
 $PackDirInZip = "fabric-1.21.11-friends-client-pack\mods"
 
+# --- modflared forced-tunnels config (written into the game dir during install) ---
+$ForcedTunnelsJson = '["minecraft.dekhlo.to"]'
+
 $ServerOnlyPrefixes = @("graves-", "polymer-bundled-", "repurposed_structures-", "midnightlib-fabric-", "FallingTree-")
 
 # --- optional -Shaders extras (client-visual only, does not affect server compatibility) ---
@@ -464,6 +467,16 @@ try {
         }
 
         Write-Log "Shaders installed: Iris, Sodium 0.8.7, Complementary Unbound shaderpack (shaderpacks\$ShaderpackZip)."
+    }
+
+    # --- G.6: modflared forced-tunnels config (written to both locations modflared reads) ---
+    Write-Log "[6c/9] Writing modflared forced_tunnels.json..."
+    $Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    foreach ($d in @((Join-Path $TargetDir "config\modflared"), (Join-Path $TargetDir "modflared"))) {
+        New-Item -ItemType Directory -Force -Path $d | Out-Null
+        $ForcedTunnelsPath = Join-Path $d "forced_tunnels.json"
+        [System.IO.File]::WriteAllText($ForcedTunnelsPath, $ForcedTunnelsJson + "`n", $Utf8NoBom)
+        Write-Log "Wrote $ForcedTunnelsPath"
     }
 
     # --- H: verify all mod jars ---

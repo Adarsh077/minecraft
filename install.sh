@@ -12,6 +12,9 @@ PACK_ZIP_URL="https://drive.usercontent.google.com/download?id=1xrjCldCkGCgfdKuB
 PACK_ZIP_SHA256="1c0a7c9fb578d459bf236cc5d9dad597f18fa1b6581486186fdd63ba0e2709d1"
 PACK_DIR_IN_ZIP="fabric-1.21.11-friends-client-pack/mods"
 
+# --- modflared forced-tunnels config (written into the game dir during install) ---
+FORCED_TUNNELS_JSON='["minecraft.dekhlo.to"]'
+
 SERVER_ONLY_PREFIXES="graves- polymer-bundled- repurposed_structures- midnightlib-fabric- FallingTree-"
 
 # --- optional --shaders extras (client-visual only, does not affect server compatibility) ---
@@ -583,6 +586,14 @@ if [ -n "$SHADERS" ]; then
 
   log "Shaders installed: Iris, Sodium 0.8.7, Complementary Unbound shaderpack (shaderpacks/$SHADERPACK_ZIP)."
 fi
+
+# --- G.6: modflared forced-tunnels config (written to both locations modflared reads) ---
+log "[6c/9] Writing modflared forced_tunnels.json..."
+for d in "$TARGET_DIR/config/modflared" "$TARGET_DIR/modflared"; do
+  mkdir -p "$d"
+  printf '%s\n' "$FORCED_TUNNELS_JSON" > "$d/forced_tunnels.json"
+  log "Wrote $d/forced_tunnels.json"
+done
 
 # --- H: verify all mod jars ---
 # Without shaders: 24 jars, Sodium 0.8.14-beta.2.
