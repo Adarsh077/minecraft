@@ -1,6 +1,6 @@
 # Minecraft Fabric 1.21.11 — Friends Modpack Installer
 
-One command. Installs Fabric loader + all 23 mods. **No Java needed.**
+One command. Installs Fabric loader + all 24 mods. **No Java needed.**
 
 ## Install — with shaders
 
@@ -46,9 +46,9 @@ Shaders: Options → Video Settings → Shader Packs → pick one → Apply.
 | | |
 |---|---|
 | Loader | Fabric 0.19.3, Minecraft 1.21.11 |
-| Mods | 23 jars, versions pinned and SHA-256 verified |
+| Mods | 24 jars, versions pinned and SHA-256 verified |
 | Performance | Sodium, Lithium, FerriteCore |
-| Client | JEI, Jade, Inventory Profiles Next |
+| Client | JEI, Jade, Inventory Profiles Next, Modflared |
 | Gameplay | Waystones, Biomes O' Plenty, Farmer's Delight, Traveler's Backpack, Storage Drawers, Carry On, Adorn, MDM, Fantastic Wings |
 | With shaders | Iris + Sodium 0.8.7 + Complementary Unbound |
 

@@ -18,8 +18,8 @@ $FabricLoaderVersion = "0.19.3"
 $FabricLoaderId = "fabric-loader-$FabricLoaderVersion-$FabricMcVersion"
 $VersionManifestUrl = "https://launchermeta.mojang.com/mc/game/version_manifest_v2.json"
 $FabricProfileUrl = "https://meta.fabricmc.net/v2/versions/loader/$FabricMcVersion/$FabricLoaderVersion/profile/json"
-$PackZipUrl = "https://drive.usercontent.google.com/download?id=1WaCgnbo9m41CGDz1v4XI1ASbP4_LL7O3&export=download&confirm=t"
-$PackZipSha256 = "975176a6fdbd5e0da23934a21637f75d6ce5d0aef006f0d3a1067ab3b29b2a20"
+$PackZipUrl = "https://drive.usercontent.google.com/download?id=1xrjCldCkGCgfdKuBf9tUxS_N4Sfqz-FE&export=download&confirm=t"
+$PackZipSha256 = "1c0a7c9fb578d459bf236cc5d9dad597f18fa1b6581486186fdd63ba0e2709d1"
 $PackDirInZip = "fabric-1.21.11-friends-client-pack\mods"
 
 $ServerOnlyPrefixes = @("graves-", "polymer-bundled-", "repurposed_structures-", "midnightlib-fabric-", "FallingTree-")
@@ -37,7 +37,7 @@ $ShaderpackZip = "ComplementaryUnbound_r5.8.1.zip"
 $ShaderpackUrl = "https://cdn.modrinth.com/data/R6NEzAwj/versions/VMHXIk50/ComplementaryUnbound_r5.8.1.zip"
 $ShaderpackSha256 = "bb89b1fc54687d4147a837fb2e3c3f7261a13bee51819761e9b6a91cb7915965"
 
-# --- 23-jar manifest: filename -> sha256 ---
+# --- 24-jar manifest: filename -> sha256 ---
 $Manifest = @{
     "Adorn-7.6.1+1.21.11-fabric.jar"                       = "d431be4ee89d0d71b1ababedaa5275f478cfff5de94eba1165f5cd10d1b676d3"
     "balm-fabric-1.21.11-21.11.9.1.jar"                    = "e957283fcf3d1a3bc1a832db74fa80b03b770eb61d2875de644e66da84bb0390"
@@ -56,6 +56,7 @@ $Manifest = @{
     "libIPN-fabric-1.21.11-6.6.3.jar"                      = "94a52d56ec41e31a98089aeff07baf25534986922d572eac85475b5e2736c9af"
     "lithium-fabric-0.21.4+mc1.21.11.jar"                  = "5135c41da5b43cbdcb29424bde65195143ac4084e23834c8eac065942201c78b"
     "mdm-26.7.0-fabric-1.21.11.jar"                        = "dded3b56d982410de040d7e0c3f3e068876f126bc4077c9a426d90f1695abe0b"
+    "modflared-1.6.0+release.129.jar"                      = "5389a4c89dc91ad1edabff96c92d98cec85a5fc0a6e8120885f04cfd3f371943"
     "PuzzlesLib-v21.11.13-mc1.21.11-Fabric.jar"            = "1c7b062f4d4fd4c830dbaa875da01706ef85f072969191d8c1affef693a66b82"
     "sodium-fabric-0.8.14-beta.2+mc1.21.11.jar"            = "24990c1c497bdda4605c595f4ee65aaf32f724b1498a33c63f43cb4500280c51"
     "StorageDrawers-fabric-1.21.11-20.0.0.jar"             = "5910484b2ad3813094600a229ef95bc6947cfe3815869b6fa418b139a037fdf9"
@@ -79,7 +80,7 @@ $KnownModPrefixes = @(
     "Adorn-", "balm-fabric-", "BiomesOPlenty-fabric-", "carryon-fabric-",
     "fabric-language-kotlin-", "FantasticWings-", "FarmersDelight-", "ForgeConfigAPIPort-",
     "GlitchCore-fabric-", "InventoryProfilesNext-fabric-", "Jade-", "jei-", "libIPN-fabric-",
-    "mdm-", "PuzzlesLib-", "StorageDrawers-fabric-", "TerraBlender-fabric-",
+    "mdm-", "modflared-", "PuzzlesLib-", "StorageDrawers-fabric-", "TerraBlender-fabric-",
     "travelersbackpack-fabric-", "waystones-fabric-"
 )
 
@@ -163,13 +164,13 @@ if ($NoShaders) {
 
 # --- effective manifest for this run (depends on final $Shaders state) ---
 $EffectiveManifest = $Manifest.Clone()
-$ExpectedJarCount = 23
+$ExpectedJarCount = 24
 $ExpectedSodiumJar = $SodiumBaseJar
 if ($Shaders) {
     $EffectiveManifest.Remove($SodiumBaseJar)
     $EffectiveManifest[$SodiumShadersJar] = $SodiumShadersSha256
     $EffectiveManifest[$IrisJar] = $IrisSha256
-    $ExpectedJarCount = 24
+    $ExpectedJarCount = 25
     $ExpectedSodiumJar = $SodiumShadersJar
 }
 
@@ -345,13 +346,13 @@ try {
         }
         $Magic = [System.Text.Encoding]::ASCII.GetString($FirstBytes)
         if ($Magic -ne "PK") {
-            Fail "Downloaded file at $PackZipPath is not a zip (Google Drive may have returned an interstitial page). Download 'Minecraft-Fabric-1.21.11-Friends-Client-Pack.zip' manually from https://drive.google.com/file/d/1WaCgnbo9m41CGDz1v4XI1ASbP4_LL7O3/view and re-run with -Zip C:\path\to\file.zip"
+            Fail "Downloaded file at $PackZipPath is not a zip (Google Drive may have returned an interstitial page). Download 'Minecraft-Fabric-1.21.11-Friends-Client-Pack.zip' manually from https://drive.google.com/file/d/1xrjCldCkGCgfdKuBf9tUxS_N4Sfqz-FE/view and re-run with -Zip C:\path\to\file.zip"
         }
 
         if (-not $UsingUserZip) {
             $PackActualSha256 = Get-Sha256 -path $PackZipPath
             if ($PackActualSha256 -ne $PackZipSha256) {
-                Fail "SHA-256 mismatch for downloaded pack zip: expected $PackZipSha256, got $PackActualSha256. Download 'Minecraft-Fabric-1.21.11-Friends-Client-Pack.zip' manually from https://drive.google.com/file/d/1WaCgnbo9m41CGDz1v4XI1ASbP4_LL7O3/view and re-run with -Zip C:\path\to\file.zip"
+                Fail "SHA-256 mismatch for downloaded pack zip: expected $PackZipSha256, got $PackActualSha256. Download 'Minecraft-Fabric-1.21.11-Friends-Client-Pack.zip' manually from https://drive.google.com/file/d/1xrjCldCkGCgfdKuBf9tUxS_N4Sfqz-FE/view and re-run with -Zip C:\path\to\file.zip"
             }
         } else {
             Write-Log "Note: -Zip provided; skipping the built-in Google Drive hash check (verifying via final per-jar manifest instead)."
@@ -466,8 +467,8 @@ try {
     }
 
     # --- H: verify all mod jars ---
-    # Without -Shaders: 23 jars, Sodium 0.8.14-beta.2.
-    # With -Shaders: 24 jars in mods\ (Sodium swapped to 0.8.7, plus Iris); the
+    # Without -Shaders: 24 jars, Sodium 0.8.14-beta.2.
+    # With -Shaders: 25 jars in mods\ (Sodium swapped to 0.8.7, plus Iris); the
     # shaderpack zip lives in shaderpacks\ and is verified separately above.
     Write-Log "[7/9] Verifying all $ExpectedJarCount mod jars by SHA-256..."
 
