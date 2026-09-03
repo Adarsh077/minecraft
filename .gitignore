@@ -1,0 +1,8 @@
+# Local pack artifacts. The installer downloads every jar from the Modrinth CDN,
+# so these are a local archive only -- and friends.zip is 145M, well over
+# GitHub's 100MB per-file push limit.
+friends/
+friends.zip
+fabric-1.21.11-friends-client-pack/
+fabric-1.21.11-friends-client-pack.zip
+new-jars-manifest.txt

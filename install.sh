@@ -8,17 +8,16 @@ FABRIC_LOADER_VERSION="0.19.3"
 FABRIC_LOADER_ID="fabric-loader-${FABRIC_LOADER_VERSION}-${FABRIC_MC_VERSION}"
 VERSION_MANIFEST_URL="https://launchermeta.mojang.com/mc/game/version_manifest_v2.json"
 FABRIC_PROFILE_URL="https://meta.fabricmc.net/v2/versions/loader/${FABRIC_MC_VERSION}/${FABRIC_LOADER_VERSION}/profile/json"
-PACK_ZIP_URL="https://drive.usercontent.google.com/download?id=1xrjCldCkGCgfdKuBf9tUxS_N4Sfqz-FE&export=download&confirm=t"
-PACK_ZIP_SHA256="1c0a7c9fb578d459bf236cc5d9dad597f18fa1b6581486186fdd63ba0e2709d1"
-PACK_DIR_IN_ZIP="fabric-1.21.11-friends-client-pack/mods"
-
 # --- modflared forced-tunnels config (written into the game dir during install) ---
 FORCED_TUNNELS_JSON='["minecraft.dekhlo.to"]'
 
-SERVER_ONLY_PREFIXES="graves- polymer-bundled- repurposed_structures- midnightlib-fabric- FallingTree-"
+# NOTE: midnightlib-fabric- is intentionally NOT server-only: Cull Leaves (and other
+# client mods) hard-require it ("midnightlib": "*"), so it must stay in mods/.
+SERVER_ONLY_PREFIXES="graves- polymer-bundled- repurposed_structures- FallingTree-"
 
-# --- optional --shaders extras (client-visual only, does not affect server compatibility) ---
-# Iris 1.10.7 hard-pins Sodium 0.8.7, which replaces the base pack's 0.8.14-beta.2.
+# --- shader stack (installed for pandit/modi only) ---
+# Iris 1.10.7 hard-pins Sodium 0.8.7, which replaces the base 0.8.14-beta.2 for
+# shader tiers -- never both. dalit keeps 0.8.14-beta.2 and installs no Iris.
 SODIUM_BASE_JAR="sodium-fabric-0.8.14-beta.2+mc1.21.11.jar"
 SODIUM_SHADERS_JAR="sodium-fabric-0.8.7+mc1.21.11.jar"
 SODIUM_SHADERS_URL="https://cdn.modrinth.com/data/AANobbMI/versions/UddlN6L4/sodium-fabric-0.8.7%2Bmc1.21.11.jar"
@@ -30,55 +29,77 @@ SHADERPACK_ZIP="ComplementaryUnbound_r5.8.1.zip"
 SHADERPACK_URL="https://cdn.modrinth.com/data/R6NEzAwj/versions/VMHXIk50/ComplementaryUnbound_r5.8.1.zip"
 SHADERPACK_SHA256="bb89b1fc54687d4147a837fb2e3c3f7261a13bee51819761e9b6a91cb7915965"
 
-# --- 24-jar manifest: filename sha256 ---
-MANIFEST='
-Adorn-7.6.1+1.21.11-fabric.jar d431be4ee89d0d71b1ababedaa5275f478cfff5de94eba1165f5cd10d1b676d3
-balm-fabric-1.21.11-21.11.9.1.jar e957283fcf3d1a3bc1a832db74fa80b03b770eb61d2875de644e66da84bb0390
-BiomesOPlenty-fabric-1.21.11-21.11.0.32.jar 89d39707bc095516ba1bf4f162628dfba51dd58a3bcac14c74a14ffefc18f00a
-carryon-fabric-1.21.11-2.9.2.jar ac6c68baf2cbffef7de6739423aa615f151c8f1601bacf30921c8bd88f3f932d
-fabric-api-0.141.6+1.21.11.jar bdff7fd7e220085cfad2ff9b1f40dde6534ae0b96cf378f97a374bc54cb9ed0f
-fabric-language-kotlin-1.13.13+kotlin.2.4.10.jar 34ccdacf13bb9351fe43ce61912c2e09b72364e43e787d36ba3d2d04dec75a52
-FantasticWings-v21.11.1-mc1.21.11-Fabric.jar b7cc2eb1814fe5c5eb3b0b3e6af399d4be0bcda44af3bd9b02994fdd6f3d7e43
-FarmersDelight-1.21.11-3.6.13+refabricated.jar 3b3caa7a3c9b7ddc0a28f620ec729da6ab00a181fd8667de104324a5bb9015d1
-ferritecore-8.2.0-fabric.jar f76bd760cbf48280cc7c43180f5089a46235fa24d934a8acf3da04a664c2c715
-ForgeConfigAPIPort-v21.11.1-mc1.21.11-Fabric.jar 31a0686904fad1cfdeb1d6b011ac1c2280990d6e76ac2416468147e2246b4db1
-GlitchCore-fabric-1.21.11-21.11.0.4.jar 8c5b3912d167640f1911982781578ccfb3fbb11e73fcee319c7ff44045a6e8ef
-InventoryProfilesNext-fabric-1.21.11-2.2.6.jar 1d971f0f624c8f2d2693004aff96cb9546d65e3ab950d63563c769242d2c6474
-Jade-1.21.11-Fabric-21.1.6.jar bcf1a7f6f9eb325b89d65bc15b41a35fdca2c2b052e9af772ffdcd70548d2fc8
-jei-1.21.11-fabric-27.23.0.71.jar e904a724d7e2b5b2382b1f46f8d3efe84cb6a955ee6fe5310e8a173cf881ffb6
-libIPN-fabric-1.21.11-6.6.3.jar 94a52d56ec41e31a98089aeff07baf25534986922d572eac85475b5e2736c9af
-lithium-fabric-0.21.4+mc1.21.11.jar 5135c41da5b43cbdcb29424bde65195143ac4084e23834c8eac065942201c78b
-mdm-26.7.0-fabric-1.21.11.jar dded3b56d982410de040d7e0c3f3e068876f126bc4077c9a426d90f1695abe0b
-modflared-1.6.0+release.129.jar 5389a4c89dc91ad1edabff96c92d98cec85a5fc0a6e8120885f04cfd3f371943
-PuzzlesLib-v21.11.13-mc1.21.11-Fabric.jar 1c7b062f4d4fd4c830dbaa875da01706ef85f072969191d8c1affef693a66b82
-sodium-fabric-0.8.14-beta.2+mc1.21.11.jar 24990c1c497bdda4605c595f4ee65aaf32f724b1498a33c63f43cb4500280c51
-StorageDrawers-fabric-1.21.11-20.0.0.jar 5910484b2ad3813094600a229ef95bc6947cfe3815869b6fa418b139a037fdf9
-TerraBlender-fabric-1.21.11-21.11.0.0.jar 3f0567c194d579677b42dd57eeb912e4e558ca069f4fc525213d182e60113772
-travelersbackpack-fabric-1.21.11-10.11.10.jar d9f42b1bafd29d84fd97b5b6e51c948f0ed7d1251c0deed40e512870ea5980fb
-waystones-fabric-1.21.11-21.11.9.jar 6ce002c05655969f528dc1a1eb335a567caa6eaaf95715a86770a066b693f470
-'
+# --- resourcepack (downloaded into <gamedir>/resourcepacks/; note the space in the name) ---
+RESOURCEPACK_NAME="Presence Footsteps R3.zip"
+RESOURCEPACK_SHA256="d33bf876c957a0c2f570f55586948440d9cb849b549d744d26d80733f5ec286f"
+RESOURCEPACK_URL="https://cdn.modrinth.com/data/qSJqZIl1/versions/yAgMm4Uo/Presence%20Footsteps%20R3.zip"
 
-# --- 5 author-hosted mods to fetch directly from Modrinth CDN ---
-AUTHOR_URLS='
-https://cdn.modrinth.com/data/LOpKHB2A/versions/MydMW2TT/waystones-fabric-1.21.11-21.11.9.jar
-https://cdn.modrinth.com/data/HXF82T3G/versions/JJKbM72H/BiomesOPlenty-fabric-1.21.11-21.11.0.32.jar
-https://cdn.modrinth.com/data/TmUXSYKk/versions/q1Kv9EdP/mdm-26.7.0-fabric-1.21.11.jar
-https://cdn.modrinth.com/data/MBAkmtvl/versions/5POKgjJn/balm-fabric-1.21.11-21.11.9.1.jar
-https://cdn.modrinth.com/data/s3dmwKy5/versions/CO7NeLTt/GlitchCore-fabric-1.21.11-21.11.0.4.jar
+# --- 37 mod jars downloaded from the Modrinth CDN: "filename sha256 url" per line ---
+# Every URL was resolved by SHA-512 lookup against the Modrinth API, so each serves
+# exactly the bytes its SHA-256 names. Do not substitute URLs or versions; keep the
+# %2B / %20 escapes intact. Installed to <gamedir>/mods/ (all tiers).
+MODS_TABLE='
+Adorn-7.6.1+1.21.11-fabric.jar d431be4ee89d0d71b1ababedaa5275f478cfff5de94eba1165f5cd10d1b676d3 https://cdn.modrinth.com/data/E6FUtRJh/versions/tyOUUBLZ/Adorn-7.6.1%2B1.21.11-fabric.jar
+AmbientSounds_FABRIC_v6.3.5_mc1.21.11.jar e2a657ad18fcc4382418dcff9ddc411ae4912001c8cb90766020bb7cfdcbb9fb https://cdn.modrinth.com/data/fM515JnW/versions/JZUqW70J/AmbientSounds_FABRIC_v6.3.5_mc1.21.11.jar
+animal_feeding_trough-1.2.0+1.21.11.jar e4a62c4a6427a3779c3507c41901a57238d44c7665f29bdb9c4b5f653d3ab92c https://cdn.modrinth.com/data/bRFWnJ87/versions/aTRE6QT1/animal_feeding_trough-1.2.0%2B1.21.11.jar
+carryon-fabric-1.21.11-2.9.2.jar ac6c68baf2cbffef7de6739423aa615f151c8f1601bacf30921c8bd88f3f932d https://cdn.modrinth.com/data/joEfVgkn/versions/KOFV3duz/carryon-fabric-1.21.11-2.9.2.jar
+cc-tweaked-1.21.11-fabric-1.117.1.jar ba773f0a6a942a8f5d628689470299ebe5e362a931993bda8c4f232f42556494 https://cdn.modrinth.com/data/gu7yAYhd/versions/IikPYYtH/cc-tweaked-1.21.11-fabric-1.117.1.jar
+cloth-config-21.11.153-fabric.jar 8a40c84e5ecde525acfb6c4e13b8002dacfca3ef9534d7faf6e8049656f423c8 https://cdn.modrinth.com/data/9s6osm5g/versions/xuX40TN5/cloth-config-21.11.153-fabric.jar
+connectiblechains-2.5.7+1.21.11.jar ee37964f95329511c789c323d7d3b047423e0b69f93ba26f751a293183e354dd https://cdn.modrinth.com/data/ykSfIgTw/versions/h8RIIOQq/connectiblechains-2.5.7%2B1.21.11.jar
+continuity-3.0.1-beta.1+1.21.11.jar 1d4d4e86fb20bd0b078fcc518f4641d21985cc8bfaefa6dd49cfa1beff52ac83 https://cdn.modrinth.com/data/1IjD5062/versions/mX1iknM1/continuity-3.0.1-beta.1%2B1.21.11.jar
+create-fly-1.21.11-6.0.9-5.jar 55f59380921fada030cd1adaba950393d492f731c2e4d982294d34258c739b9b https://cdn.modrinth.com/data/dKvj0eNn/versions/fn0H9rSj/create-fly-1.21.11-6.0.9-5.jar
+CreativeCore_FABRIC_v2.14.11_mc1.21.11.jar a8e759b023b2de920022d32d1e09bd3c6c9ad32546ccc114f1951100c58984d8 https://cdn.modrinth.com/data/OsZiaDHq/versions/jyLHWJlj/CreativeCore_FABRIC_v2.14.11_mc1.21.11.jar
+cullleaves-fabric-4.1.1.1+1.21.11.jar fc82497837bdb26d50468383da79fd12aecb2a51d09d94c892baaa55cd3829d3 https://cdn.modrinth.com/data/GNxdLCoP/versions/yrL6pwHZ/cullleaves-fabric-4.1.1.1%2B1.21.11.jar
+entity_texture_features-7.2.1-1.21.11-fabric.jar a5630cef60a8d13d77f2fd9e56de6fd0381187a1bfca4713e8e5f276f235c50e https://cdn.modrinth.com/data/BVzZfTc1/versions/9uQFLvtW/entity_texture_features-7.2.1-1.21.11-fabric.jar
+expanded_weaponry-0.8.jar 4c1175a1e31780d05c3cc7b2c924a20d0df887c712218e8cc3c8d49c7200b1be https://cdn.modrinth.com/data/q8rZUpjS/versions/91zQqaH6/expanded_weaponry-0.8.jar
+fabric-api-0.141.6+1.21.11.jar bdff7fd7e220085cfad2ff9b1f40dde6534ae0b96cf378f97a374bc54cb9ed0f https://cdn.modrinth.com/data/P7dR8mSH/versions/6qAuTtLR/fabric-api-0.141.6%2B1.21.11.jar
+fabric-language-kotlin-1.13.13+kotlin.2.4.10.jar 34ccdacf13bb9351fe43ce61912c2e09b72364e43e787d36ba3d2d04dec75a52 https://cdn.modrinth.com/data/Ha28R6CL/versions/bdhiINYC/fabric-language-kotlin-1.13.13%2Bkotlin.2.4.10.jar
+FantasticWings-v21.11.1-mc1.21.11-Fabric.jar b7cc2eb1814fe5c5eb3b0b3e6af399d4be0bcda44af3bd9b02994fdd6f3d7e43 https://cdn.modrinth.com/data/iGEcTqwK/versions/5zJKhkHi/FantasticWings-v21.11.1-mc1.21.11-Fabric.jar
+FarmersDelight-1.21.11-3.6.13+refabricated.jar 3b3caa7a3c9b7ddc0a28f620ec729da6ab00a181fd8667de104324a5bb9015d1 https://cdn.modrinth.com/data/7vxePowz/versions/yXs9snmN/FarmersDelight-1.21.11-3.6.13%2Brefabricated.jar
+ferritecore-8.2.0-fabric.jar f76bd760cbf48280cc7c43180f5089a46235fa24d934a8acf3da04a664c2c715 https://cdn.modrinth.com/data/uXXizFIs/versions/Ii0gP3D8/ferritecore-8.2.0-fabric.jar
+ForgeConfigAPIPort-v21.11.1-mc1.21.11-Fabric.jar 31a0686904fad1cfdeb1d6b011ac1c2280990d6e76ac2416468147e2246b4db1 https://cdn.modrinth.com/data/ohNO6lps/versions/uXrWPsCu/ForgeConfigAPIPort-v21.11.1-mc1.21.11-Fabric.jar
+ImmediatelyFast-Fabric-1.14.3+1.21.11.jar c6e939744ed80345a1a70c351c481b8832d33970d6574b8d444dfe750abc2a86 https://cdn.modrinth.com/data/5ZwdcRci/versions/4EwhsTu7/ImmediatelyFast-Fabric-1.14.3%2B1.21.11.jar
+InventoryProfilesNext-fabric-1.21.11-2.2.6.jar 1d971f0f624c8f2d2693004aff96cb9546d65e3ab950d63563c769242d2c6474 https://cdn.modrinth.com/data/O7RBXm3n/versions/YKjWPbto/InventoryProfilesNext-fabric-1.21.11-2.2.6.jar
+Jade-1.21.11-Fabric-21.1.6.jar bcf1a7f6f9eb325b89d65bc15b41a35fdca2c2b052e9af772ffdcd70548d2fc8 https://cdn.modrinth.com/data/nvQzSEkH/versions/swJhAyak/Jade-1.21.11-Fabric-21.1.6.jar
+jei-1.21.11-fabric-27.23.0.71.jar e904a724d7e2b5b2382b1f46f8d3efe84cb6a955ee6fe5310e8a173cf881ffb6 https://cdn.modrinth.com/data/u6dRKJwZ/versions/vyofGDrh/jei-1.21.11-fabric-27.23.0.71.jar
+lambdynamiclights-4.9.1+1.21.11.jar 99bcfbb13cbd7c98ec9574c2959a1c6a145aac26efed54bcb32ebf08abf9282c https://cdn.modrinth.com/data/yBW8D80W/versions/5Tp7kdU0/lambdynamiclights-4.9.1%2B1.21.11.jar
+libIPN-fabric-1.21.11-6.6.3.jar 94a52d56ec41e31a98089aeff07baf25534986922d572eac85475b5e2736c9af https://cdn.modrinth.com/data/onSQdWhM/versions/ByG214OZ/libIPN-fabric-1.21.11-6.6.3.jar
+lithium-fabric-0.21.4+mc1.21.11.jar 5135c41da5b43cbdcb29424bde65195143ac4084e23834c8eac065942201c78b https://cdn.modrinth.com/data/gvQqBUqZ/versions/Ow7wA0kG/lithium-fabric-0.21.4%2Bmc1.21.11.jar
+midnightlib-fabric-1.9.3+1.21.11.jar 515dcc1602a3e560c2e8c7c5672af661a92bbddb1a6e2acaead3176773cf446f https://cdn.modrinth.com/data/codAaoxh/versions/jkodor79/midnightlib-fabric-1.9.3%2B1.21.11.jar
+modflared-1.6.0+release.129.jar 5389a4c89dc91ad1edabff96c92d98cec85a5fc0a6e8120885f04cfd3f371943 https://cdn.modrinth.com/data/uRHq6kbO/versions/ylsFkqBg/modflared-1.6.0%2Brelease.129.jar
+PresenceFootsteps-1.12.4+1.21.11.jar c333a4f82696b38ed0fd0558878dce67489c6105b00fafe01cccba73155ae569 https://cdn.modrinth.com/data/rcTfTZr3/versions/xjmToylJ/PresenceFootsteps-1.12.4%2B1.21.11.jar
+PuzzlesLib-v21.11.13-mc1.21.11-Fabric.jar 1c7b062f4d4fd4c830dbaa875da01706ef85f072969191d8c1affef693a66b82 https://cdn.modrinth.com/data/QAGBst4M/versions/xTX7sOwU/PuzzlesLib-v21.11.13-mc1.21.11-Fabric.jar
+skinlayers3d-fabric-1.11.2-mc1.21.11.jar 31243ee08b76b3dab71d7761963f317125c536f6b8984795e7b02811b4f80e97 https://cdn.modrinth.com/data/zV5r3pPn/versions/3kCdl1bI/skinlayers3d-fabric-1.11.2-mc1.21.11.jar
+sodium-fabric-0.8.14-beta.2+mc1.21.11.jar 24990c1c497bdda4605c595f4ee65aaf32f724b1498a33c63f43cb4500280c51 https://cdn.modrinth.com/data/AANobbMI/versions/vqUoGREs/sodium-fabric-0.8.14-beta.2%2Bmc1.21.11.jar
+sound-physics-remastered-fabric-1.21.11-1.5.1.jar 17a4c14f58b739d275089262fc2015ff1548425202e6e4d7ce8cecf3122cdbca https://cdn.modrinth.com/data/qyVF9oeo/versions/pfqxi9qs/sound-physics-remastered-fabric-1.21.11-1.5.1.jar
+StorageDrawers-fabric-1.21.11-20.0.0.jar 5910484b2ad3813094600a229ef95bc6947cfe3815869b6fa418b139a037fdf9 https://cdn.modrinth.com/data/guitPqEi/versions/Q9r8LMQL/StorageDrawers-fabric-1.21.11-20.0.0.jar
+TerraBlender-fabric-1.21.11-21.11.0.0.jar 3f0567c194d579677b42dd57eeb912e4e558ca069f4fc525213d182e60113772 https://cdn.modrinth.com/data/kkmrDlKT/versions/chxo508B/TerraBlender-fabric-1.21.11-21.11.0.0.jar
+travelersbackpack-fabric-1.21.11-10.11.10.jar d9f42b1bafd29d84fd97b5b6e51c948f0ed7d1251c0deed40e512870ea5980fb https://cdn.modrinth.com/data/rlloIFEV/versions/LfmQsEdR/travelersbackpack-fabric-1.21.11-10.11.10.jar
+voxelmap-fabric-1.21.11-1.15.13.jar 1fe8ed68c671a6c4a80e064a8178102d674df0bec7aebb06bb857aafadf2d0a7 https://cdn.modrinth.com/data/wkzK5379/versions/tRdGJKGE/voxelmap-fabric-1.21.11-1.15.13.jar
 '
 
 # --- known mod-name prefixes, used for duplicate-mod detection ---
-KNOWN_MOD_PREFIXES="sodium-fabric- iris-fabric- fabric-api- lithium-fabric- ferritecore- Adorn- balm-fabric- BiomesOPlenty-fabric- carryon-fabric- fabric-language-kotlin- FantasticWings- FarmersDelight- ForgeConfigAPIPort- GlitchCore-fabric- InventoryProfilesNext-fabric- Jade- jei- libIPN-fabric- mdm- modflared- PuzzlesLib- StorageDrawers-fabric- TerraBlender-fabric- travelersbackpack-fabric- waystones-fabric-"
+KNOWN_MOD_PREFIXES="sodium-fabric- iris-fabric- fabric-api- lithium-fabric- ferritecore- Adorn- carryon-fabric- fabric-language-kotlin- FantasticWings- FarmersDelight- ForgeConfigAPIPort- InventoryProfilesNext-fabric- Jade- jei- libIPN-fabric- modflared- PuzzlesLib- StorageDrawers-fabric- TerraBlender-fabric- travelersbackpack-fabric- create-fly- cc-tweaked- expanded_weaponry- animal_feeding_trough- connectiblechains- voxelmap-fabric- entity_texture_features- ImmediatelyFast-Fabric- sound-physics-remastered-fabric- skinlayers3d-fabric- lambdynamiclights- AmbientSounds_FABRIC_ CreativeCore_FABRIC_ PresenceFootsteps- cullleaves-fabric- continuity- cloth-config- midnightlib-fabric-"
 
 TARGET_DIR=""
-ZIP_OVERRIDE=""
 TMPDIR_CREATED=""
-SHADERS=""
-NO_SHADERS=""
+TIER=""
+# TIER_SHADERS is derived from the tier below: shaders (Iris + Sodium 0.8.7 swap +
+# Complementary) are installed for pandit/modi and NOT for dalit. There is no
+# user-facing shader flag.
+TIER_SHADERS=""
 
 log() { printf '%s\n' "$*"; }
 warn() { printf 'WARNING: %s\n' "$*" >&2; }
 die() { printf 'ERROR: %s\n' "$*" >&2; exit 1; }
+
+usage() {
+  printf 'Usage: sh install.sh (--dalit | --pandit | --modi) [--dir DIR]\n' >&2
+  printf '  A tier is REQUIRED:\n' >&2
+  printf '    --dalit   very low end: no shaders, minimal settings, -Xmx3G\n' >&2
+  printf '    --pandit  medium: Complementary shaders (MEDIUM), -Xmx5G\n' >&2
+  printf '    --modi    dedicated GPU: Complementary shaders (HIGH), -Xmx8G\n' >&2
+}
 
 cleanup() {
   if [ -n "$TMPDIR_CREATED" ] && [ -d "$TMPDIR_CREATED" ]; then
@@ -95,28 +116,81 @@ while [ $# -gt 0 ]; do
       TARGET_DIR="$2"
       shift 2
       ;;
-    --zip)
-      [ $# -ge 2 ] || die "--zip requires a value"
-      ZIP_OVERRIDE="$2"
-      shift 2
-      ;;
-    --shaders)
-      SHADERS="1"
+    --dalit)
+      [ -z "$TIER" ] || die "Only one tier flag may be given (--dalit / --pandit / --modi)"
+      TIER="dalit"
       shift
       ;;
-    --no-shaders)
-      NO_SHADERS="1"
+    --pandit)
+      [ -z "$TIER" ] || die "Only one tier flag may be given (--dalit / --pandit / --modi)"
+      TIER="pandit"
+      shift
+      ;;
+    --modi)
+      [ -z "$TIER" ] || die "Only one tier flag may be given (--dalit / --pandit / --modi)"
+      TIER="modi"
       shift
       ;;
     *)
+      usage
       die "Unknown argument: $1"
       ;;
   esac
 done
 
-if [ -n "$SHADERS" ] && [ -n "$NO_SHADERS" ]; then
-  die "--shaders and --no-shaders cannot both be given"
+# A tier flag is REQUIRED -- there is no default.
+if [ -z "$TIER" ]; then
+  usage
+  die "No tier given. Choose exactly one of --dalit / --pandit / --modi."
 fi
+
+# --- per-tier settings ---
+# All tiers install ALL mods; tiers differ only in shader stack and written config.
+# T_SHADERS=1 means this tier gets Iris + the Sodium 0.8.7 swap + Complementary.
+case "$TIER" in
+    dalit)
+      T_RENDER_DISTANCE=5;  T_SIM_DISTANCE=5;  T_GRAPHICS=0; T_PARTICLES=2
+      T_MIPMAP=0;           T_BIOME_BLEND=0;   T_MAXFPS=60
+      T_ENTITY_SHADOWS=false; T_AO=false;      T_ENTITY_DIST_SCALE=0.5
+      T_XMX="3G"
+      T_SHADERS=""
+      T_COMP_PROFILE=""
+      T_SOUND_PHYSICS=false
+      T_LAMBDYN="fastest"
+      T_CONTINUITY=false
+      T_SKINLAYERS=false
+      T_SODIUM_ANIMATE_VISIBLE_ONLY=true
+      T_SODIUM_RENDER_AHEAD=0
+      ;;
+    pandit)
+      T_RENDER_DISTANCE=9;  T_SIM_DISTANCE=8;  T_GRAPHICS=1; T_PARTICLES=1
+      T_MIPMAP=2;           T_BIOME_BLEND=2;   T_MAXFPS=120
+      T_ENTITY_SHADOWS=true; T_AO=true;        T_ENTITY_DIST_SCALE=1.0
+      T_XMX="5G"
+      T_SHADERS="1"
+      T_COMP_PROFILE="MEDIUM"
+      T_SOUND_PHYSICS=true
+      T_LAMBDYN="fancy"
+      T_CONTINUITY=true
+      T_SKINLAYERS=true
+      T_SODIUM_ANIMATE_VISIBLE_ONLY=true
+      T_SODIUM_RENDER_AHEAD=2
+      ;;
+    modi)
+      T_RENDER_DISTANCE=16; T_SIM_DISTANCE=12; T_GRAPHICS=2; T_PARTICLES=0
+      T_MIPMAP=4;           T_BIOME_BLEND=5;   T_MAXFPS=240
+      T_ENTITY_SHADOWS=true; T_AO=true;        T_ENTITY_DIST_SCALE=1.0
+      T_XMX="8G"
+      T_SHADERS="1"
+      T_COMP_PROFILE="HIGH"
+      T_SOUND_PHYSICS=true
+      T_LAMBDYN="fancy"
+      T_CONTINUITY=true
+      T_SKINLAYERS=true
+      T_SODIUM_ANIMATE_VISIBLE_ONLY=false
+      T_SODIUM_RENDER_AHEAD=3
+      ;;
+esac
 
 # --- OS detection ---
 if [ -z "$TARGET_DIR" ]; then
@@ -137,53 +211,60 @@ if [ ! -d "$TARGET_DIR" ]; then
   warn "Please launch vanilla ${FABRIC_MC_VERSION} once from your launcher first so assets download, then re-run this installer."
 fi
 
-log "[0/9] Using game directory: $TARGET_DIR"
+log "[0/8] Using game directory: $TARGET_DIR"
 
 MODS_DIR="$TARGET_DIR/mods"
 mkdir -p "$MODS_DIR"
 
-# --- sticky shader-mode detection ---
-# If Iris is already installed and neither --shaders nor --no-shaders was
-# passed, treat this run as shader mode anyway so a plain re-run over a
-# shader install never mixes two Sodium jars together.
-if [ -z "$SHADERS" ] && [ -z "$NO_SHADERS" ]; then
-  for f in "$MODS_DIR"/iris-fabric-*.jar; do
-    if [ -f "$f" ]; then
-      SHADERS="1"
-      log "Existing Iris install detected; keeping shaders enabled (pass --no-shaders to remove)."
-      break
-    fi
-  done
-fi
+# --- shader stack is decided by the tier (no user-facing shader flag) ---
+TIER_SHADERS="$T_SHADERS"
 
-# --- explicit --no-shaders: strip Iris + the shader Sodium build ---
-if [ -n "$NO_SHADERS" ]; then
-  log "Disabling shaders (--no-shaders)..."
+# Reconcile the Sodium/Iris stack with the tier BEFORE anything downloads or the
+# duplicate check runs, so switching tiers never leaves two Sodium jars or a stray
+# Iris behind. (shaderpacks/ is left untouched -- the zips are harmless.)
+if [ -z "$TIER_SHADERS" ]; then
+  # dalit: no shaders. Strip Iris and the Sodium 0.8.7 build left by a shader tier;
+  # base Sodium 0.8.14 is (re)downloaded in step [5].
   for f in "$MODS_DIR"/iris-fabric-*.jar; do
     [ -f "$f" ] || continue
-    log "Removing: $(basename "$f")"
+    log "Tier '$TIER': removing Iris (this tier has no shaders): $(basename "$f")"
     rm -f "$f"
   done
   for f in "$MODS_DIR"/sodium-fabric-0.8.7*.jar; do
     [ -f "$f" ] || continue
-    log "Removing: $(basename "$f")"
+    log "Tier '$TIER': removing shader Sodium build: $(basename "$f")"
     rm -f "$f"
   done
-  log "Leaving shaderpacks/ untouched (shader zips are harmless); remove manually if you don't want them."
+else
+  # pandit/modi: Iris 1.10.7 pins Sodium 0.8.7, so remove the base 0.8.14 build left
+  # by dalit; Sodium 0.8.7 and Iris are (re)downloaded in step [5].
+  _old_sodium="$MODS_DIR/$SODIUM_BASE_JAR"
+  if [ -f "$_old_sodium" ]; then
+    log "Tier '$TIER': removing base Sodium ($SODIUM_BASE_JAR); Iris requires Sodium 0.8.7"
+    rm -f "$_old_sodium"
+  fi
 fi
 
-# --- effective manifest for this run (depends on final SHADERS state) ---
-if [ -n "$SHADERS" ]; then
-  EFFECTIVE_MANIFEST="$(printf '%s\n' "$MANIFEST" | grep -vF "$SODIUM_BASE_JAR ")
-$(printf '%s %s' "$SODIUM_SHADERS_JAR" "$SODIUM_SHADERS_SHA256")
-$(printf '%s %s' "$IRIS_JAR" "$IRIS_SHA256")"
-  EXPECTED_JAR_COUNT=25
+# --- effective download table + manifest for this run (depends on the tier's shader stack) ---
+# dalit keeps sodium 0.8.14 (in MODS_TABLE) and gets no Iris. pandit/modi drop
+# sodium 0.8.14 and add sodium 0.8.7 + Iris.
+if [ -n "$TIER_SHADERS" ]; then
+  EFFECTIVE_TABLE="$(printf '%s\n' "$MODS_TABLE" | grep -vF "$SODIUM_BASE_JAR ")
+$(printf '%s %s %s' "$SODIUM_SHADERS_JAR" "$SODIUM_SHADERS_SHA256" "$SODIUM_SHADERS_URL")
+$(printf '%s %s %s' "$IRIS_JAR" "$IRIS_SHA256" "$IRIS_URL")"
+  EXPECTED_JAR_COUNT=38
   EXPECTED_SODIUM_JAR="$SODIUM_SHADERS_JAR"
 else
-  EFFECTIVE_MANIFEST="$MANIFEST"
-  EXPECTED_JAR_COUNT=24
+  EFFECTIVE_TABLE="$MODS_TABLE"
+  EXPECTED_JAR_COUNT=37
   EXPECTED_SODIUM_JAR="$SODIUM_BASE_JAR"
 fi
+
+# "filename sha256" pairs (drop the URL column) for the final verification gate.
+EFFECTIVE_MANIFEST="$(printf '%s\n' "$EFFECTIVE_TABLE" | while IFS=' ' read -r _ef _es _eu; do
+  [ -n "$_ef" ] || continue
+  printf '%s %s\n' "$_ef" "$_es"
+done)"
 
 # --- helper: hash tools ---
 sha256_of() {
@@ -224,6 +305,222 @@ fetch() {
   fi
 }
 
+# --- helper: download a file and verify its SHA-256 (idempotent) ---
+# download_verify FILENAME SHA256 URL DESTDIR
+# Skips the download if the file is already present with the right hash.
+download_verify() {
+  _dv_name="$1"
+  _dv_sha="$2"
+  _dv_url="$3"
+  _dv_dir="$4"
+  mkdir -p "$_dv_dir"
+  _dv_dest="$_dv_dir/$_dv_name"
+  if [ -f "$_dv_dest" ] && [ "$(sha256_of "$_dv_dest")" = "$_dv_sha" ]; then
+    log "Already present and verified: $_dv_name"
+    return 0
+  fi
+  log "Downloading: $_dv_name"
+  _dv_part="$_dv_dest.part"
+  fetch "$_dv_url" "$_dv_part"
+  _dv_actual="$(sha256_of "$_dv_part")"
+  if [ "$_dv_actual" != "$_dv_sha" ]; then
+    rm -f "$_dv_part"
+    die "SHA-256 mismatch for $_dv_name: expected $_dv_sha, got $_dv_actual (url: $_dv_url)"
+  fi
+  mv "$_dv_part" "$_dv_dest"
+}
+
+# --- helper: merge key/value lines into a colon- or equals-separated text config ---
+# Reads "KEY VALUE" pairs on stdin (VALUE = everything after the first space).
+# Existing lines for a key are replaced in place; every other line is preserved
+# byte-for-byte; keys not already present are appended. The file (and its parent
+# directory) is created if absent. Used for options.txt (":") and .properties ("=").
+merge_kv_file() {
+  _mkv_file="$1"
+  _mkv_sep="$2"
+  _mkv_pairs="$(cat)"
+  mkdir -p "$(dirname "$_mkv_file")"
+  [ -f "$_mkv_file" ] || : > "$_mkv_file"
+  _mkv_tmp="$_mkv_file.tmp.$$"
+  awk -v sep="$_mkv_sep" -v pairs="$_mkv_pairs" '
+    BEGIN {
+      n = split(pairs, lines, "\n")
+      for (i = 1; i <= n; i++) {
+        if (lines[i] == "") continue
+        p = index(lines[i], " ")
+        k = substr(lines[i], 1, p - 1)
+        v = substr(lines[i], p + 1)
+        key[k] = v
+      }
+    }
+    {
+      handled = 0
+      for (k in key) {
+        # Tolerate optional whitespace before the separator (a mod may re-save
+        # "key = value"); always re-write in canonical "key<sep>value" form.
+        if ($0 ~ ("^" k "[ \t]*" sep)) { print k sep key[k]; seen[k] = 1; handled = 1; break }
+      }
+      if (!handled) print
+    }
+    END {
+      for (k in key) if (!seen[k]) print k sep key[k]
+    }
+  ' "$_mkv_file" > "$_mkv_tmp" && mv "$_mkv_tmp" "$_mkv_file"
+}
+
+# --- helper: set a quoted-string key in a TOML file (create if absent) ---
+# Writes `KEY = "VALUE"`, replacing any existing line for KEY (TOML forbids
+# duplicate keys, so this cannot just append). Every other line is preserved.
+set_toml_string() {
+  _ts_file="$1"
+  _ts_key="$2"
+  _ts_val="$3"
+  mkdir -p "$(dirname "$_ts_file")"
+  [ -f "$_ts_file" ] || : > "$_ts_file"
+  _ts_tmp="$_ts_file.tmp.$$"
+  awk -v k="$_ts_key" -v val="$_ts_val" '
+    BEGIN { line = k " = \"" val "\"" }
+    $0 ~ ("^[ \t]*" k "[ \t]*=") { if (!seen) { print line; seen = 1 }; next }
+    { print }
+    END { if (!seen) print line }
+  ' "$_ts_file" > "$_ts_tmp" && mv "$_ts_tmp" "$_ts_file"
+}
+
+# --- helper: write LambDynamicLights' [light_sources] table with every source off ---
+# LambDynamicLights (NightConfig) reads each light source via the path
+# "light_sources.<name>" and serialises them as a nested [light_sources] TOML table,
+# so we write that exact shape. entities / self / beam / firefly / guardian_laser /
+# sonic_boom / glowing_effect are booleans and go to false. creeper and tnt are NOT
+# booleans -- they are ExplosiveLightingMode, which in 4.9.1 declares only SIMPLE and
+# FANCY (verified in ExplosiveLightingMode.class). There is no OFF, so explosion
+# lighting cannot be switched off here at all; "simple" is the cheaper of the two and
+# is the floor. A bare `false`, or the string "off", is an invalid enum value that
+# byId()/valueOf() silently falls back to the default for, leaving it ON.
+# water_sensitive_check is a submersion behaviour flag, not a light source, so it is
+# left untouched. Replaces an existing [light_sources] table if present (idempotent),
+# otherwise appends one.
+set_lambdyn_lights_off() {
+  _ll_file="$1"
+  mkdir -p "$(dirname "$_ll_file")"
+  [ -f "$_ll_file" ] || : > "$_ll_file"
+  _ll_tmp="$_ll_file.tmp.$$"
+  awk '
+    /^[ \t]*\[light_sources\][ \t]*$/ { in_ls = 1; next }
+    in_ls && /^[ \t]*\[/            { in_ls = 0 }
+    in_ls                          { next }
+    /^[ \t]*light_sources\./        { next }
+    { print }
+    END {
+      print "[light_sources]"
+      print "\tentities = false"
+      print "\tself = false"
+      print "\tcreeper = \"simple\""
+      print "\ttnt = \"simple\""
+      print "\tbeam = false"
+      print "\tfirefly = false"
+      print "\tguardian_laser = false"
+      print "\tsonic_boom = false"
+      print "\tglowing_effect = false"
+    }
+  ' "$_ll_file" > "$_ll_tmp" && mv "$_ll_tmp" "$_ll_file"
+}
+
+# --- helper: ensure a pack id is present in options.txt's resourcePacks list ---
+# The line is a JSON array: resourcePacks:["vanilla","file/Foo.zip"]. This preserves
+# any packs the friend already enabled and appends the given id if it is absent.
+# Minecraft 1.21.11 references a resourcepacks/ file as "file/<filename>" -- the
+# "file/" prefix is confirmed present in the vanilla client's resource-pack class.
+enable_resourcepack() {
+  _rp_file="$1"       # options.txt path
+  _rp_id="$2"         # e.g. file/Presence Footsteps R3.zip
+  mkdir -p "$(dirname "$_rp_file")"
+  [ -f "$_rp_file" ] || : > "$_rp_file"
+  _rp_line="$(grep '^resourcePacks:' "$_rp_file" 2>/dev/null | head -n 1 || true)"
+  if [ -z "$_rp_line" ]; then
+    printf '%s\n' "resourcePacks:[\"vanilla\",\"$_rp_id\"]" >> "$_rp_file"
+    return 0
+  fi
+  # Already present? (match the quoted id exactly)
+  _rp_quoted="\"$_rp_id\""
+  case "$_rp_line" in
+    *"$_rp_quoted"*) return 0 ;;
+  esac
+  _rp_array="${_rp_line#resourcePacks:}"
+  if [ "$_rp_array" = "[]" ]; then
+    _rp_new="resourcePacks:[\"$_rp_id\"]"
+  else
+    _rp_new="resourcePacks:${_rp_array%]},\"$_rp_id\"]"
+  fi
+  _rp_tmp="$_rp_file.tmp.$$"
+  awk -v newline="$_rp_new" '
+    /^resourcePacks:/ && !done { print newline; done = 1; next }
+    { print }
+  ' "$_rp_file" > "$_rp_tmp" && mv "$_rp_tmp" "$_rp_file"
+}
+
+# --- helper: deep-merge a JSON patch into a JSON file (create if absent) ---
+# Prefers python3, then jq. If neither is available and the file is absent, the
+# patch is written verbatim (a partial JSON is safe for every consumer here). If
+# neither is available and the file already exists, it is left untouched (we must
+# not clobber a friend's config) and a warning is logged; return 1 in that case.
+json_merge() {
+  _jm_file="$1"
+  _jm_patch="$2"
+  mkdir -p "$(dirname "$_jm_file")"
+  if command -v python3 >/dev/null 2>&1; then
+    if printf '%s' "$_jm_patch" | python3 -c '
+import json, sys
+path = sys.argv[1]
+patch = json.load(sys.stdin)
+try:
+    with open(path) as f:
+        data = json.load(f)
+    if not isinstance(data, dict):
+        data = {}
+except (FileNotFoundError, ValueError):
+    data = {}
+def merge(a, b):
+    for k, v in b.items():
+        if isinstance(v, dict) and isinstance(a.get(k), dict):
+            merge(a[k], v)
+        else:
+            a[k] = v
+merge(data, patch)
+with open(path, "w") as f:
+    json.dump(data, f, indent=2)
+' "$_jm_file"; then
+      return 0
+    fi
+    warn "Failed to write JSON config $_jm_file; leaving it untouched."
+    return 1
+  elif command -v jq >/dev/null 2>&1; then
+    _jm_base="$_jm_file"
+    if [ ! -f "$_jm_file" ]; then
+      _jm_base="$TMPDIR_CREATED/json_merge_empty.json"
+      printf '{}' > "$_jm_base"
+    fi
+    _jm_tmp="$_jm_file.tmp.$$"
+    if printf '%s' "$_jm_patch" | jq -s '.[0] * .[1]' "$_jm_base" - > "$_jm_tmp"; then
+      mv "$_jm_tmp" "$_jm_file"
+      return 0
+    fi
+    rm -f "$_jm_tmp"
+    warn "Failed to write JSON config $_jm_file; leaving it untouched."
+    return 1
+  elif [ ! -f "$_jm_file" ]; then
+    printf '%s\n' "$_jm_patch" > "$_jm_file"
+    return 0
+  else
+    warn "Neither python3 nor jq available; not merging $_jm_file (leaving your existing config untouched)."
+    return 1
+  fi
+}
+
+# --- helper: report whether a config file will be created or merged (for logging) ---
+config_action() {
+  if [ -f "$1" ]; then printf 'merged'; else printf 'created'; fi
+}
+
 TMPDIR_CREATED="$(mktemp -d)"
 
 # --- A/B: vanilla base version ---
@@ -232,9 +529,9 @@ VERSION_JSON="$VERSION_DIR/${FABRIC_MC_VERSION}.json"
 VERSION_JAR="$VERSION_DIR/${FABRIC_MC_VERSION}.jar"
 
 if [ -f "$VERSION_JSON" ] && [ -f "$VERSION_JAR" ]; then
-  log "[1/9] Vanilla ${FABRIC_MC_VERSION} base version already present, skipping."
+  log "[1/8] Vanilla ${FABRIC_MC_VERSION} base version already present, skipping."
 else
-  log "[1/9] Installing vanilla ${FABRIC_MC_VERSION} base version..."
+  log "[1/8] Installing vanilla ${FABRIC_MC_VERSION} base version..."
   mkdir -p "$VERSION_DIR"
   MANIFEST_JSON="$TMPDIR_CREATED/version_manifest_v2.json"
   fetch "$VERSION_MANIFEST_URL" "$MANIFEST_JSON"
@@ -310,7 +607,7 @@ print(data["downloads"]["client"]["sha1"])
 fi
 
 # --- C: fabric loader profile ---
-log "[2/9] Installing Fabric loader profile (${FABRIC_LOADER_ID})..."
+log "[2/8] Installing Fabric loader profile (${FABRIC_LOADER_ID})..."
 PROFILE_JSON="$TMPDIR_CREATED/fabric_profile.json"
 fetch "$FABRIC_PROFILE_URL" "$PROFILE_JSON"
 
@@ -347,8 +644,16 @@ cp "$PROFILE_JSON" "$FABRIC_VERSION_DIR/${PROFILE_ID}.json"
 log "Fabric loader profile written to versions/${PROFILE_ID}/${PROFILE_ID}.json"
 
 # --- D: launcher_profiles.json ---
-log "[3/9] Registering launcher profile..."
+log "[3/8] Registering launcher profile..."
 LAUNCHER_PROFILES="$TARGET_DIR/launcher_profiles.json"
+
+# When a tier is set, its RAM allocation goes in the profile's javaArgs field
+# (the launcher otherwise applies its own default JVM args). Empty when no tier,
+# in which case no javaArgs field is written and existing installs are unchanged.
+JAVA_ARGS=""
+if [ -n "$TIER" ]; then
+  JAVA_ARGS="-Xmx${T_XMX} -XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M"
+fi
 
 if command -v python3 >/dev/null 2>&1; then
   # This step is a convenience only; a parse error or unwritable file must
@@ -359,6 +664,7 @@ import json, sys
 
 path = sys.argv[1]
 profile_id = sys.argv[2]
+java_args = sys.argv[3]
 
 try:
     with open(path) as f:
@@ -369,18 +675,28 @@ except (FileNotFoundError, ValueError):
 if "profiles" not in data or not isinstance(data.get("profiles"), dict):
     data["profiles"] = {}
 
-data["profiles"]["fabric-loader-1.21.11"] = {
-    "name": "fabric-loader-1.21.11",
-    "type": "custom",
-    "created": "2026-08-11T00:00:00.000Z",
-    "lastVersionId": profile_id,
-    "icon": "TNT",
-}
+# Preserve any other fields on our profile object; only our known keys are
+# authoritative, and javaArgs is set/removed based on whether a tier was given.
+prof = data["profiles"].get("fabric-loader-1.21.11")
+if not isinstance(prof, dict):
+    prof = {}
+prof.setdefault("created", "2026-08-11T00:00:00.000Z")
+prof["name"] = "fabric-loader-1.21.11"
+prof["type"] = "custom"
+prof["lastVersionId"] = profile_id
+prof["icon"] = "TNT"
+if java_args:
+    prof["javaArgs"] = java_args
+data["profiles"]["fabric-loader-1.21.11"] = prof
 
 with open(path, "w") as f:
     json.dump(data, f, indent=2)
-' "$LAUNCHER_PROFILES" "$PROFILE_ID"; then
-    log "launcher_profiles.json updated."
+' "$LAUNCHER_PROFILES" "$PROFILE_ID" "$JAVA_ARGS"; then
+    if [ -n "$JAVA_ARGS" ]; then
+      log "launcher_profiles.json updated (tier '$TIER': javaArgs -Xmx${T_XMX})."
+    else
+      log "launcher_profiles.json updated."
+    fi
   else
     warn "Failed to update launcher_profiles.json; skipping. Select the ${PROFILE_ID} version manually in TLauncher."
   fi
@@ -392,11 +708,15 @@ elif command -v jq >/dev/null 2>&1; then
     printf '{"profiles":{},"settings":{},"version":3}' > "$BASE_JSON"
   fi
   NEW_JSON="$TMPDIR_CREATED/launcher_profiles.new.json"
-  if jq --arg lastVersionId "$PROFILE_ID" \
-    '.profiles["fabric-loader-1.21.11"] = {"name":"fabric-loader-1.21.11","type":"custom","created":"2026-08-11T00:00:00.000Z","lastVersionId":$lastVersionId,"icon":"TNT"}' \
+  if jq --arg lastVersionId "$PROFILE_ID" --arg javaArgs "$JAVA_ARGS" \
+    '.profiles["fabric-loader-1.21.11"] = ((.profiles["fabric-loader-1.21.11"] // {}) + {"name":"fabric-loader-1.21.11","type":"custom","created":((.profiles["fabric-loader-1.21.11"].created) // "2026-08-11T00:00:00.000Z"),"lastVersionId":$lastVersionId,"icon":"TNT"} + (if $javaArgs == "" then {} else {"javaArgs":$javaArgs} end))' \
     "$BASE_JSON" > "$NEW_JSON"; then
     mv "$NEW_JSON" "$LAUNCHER_PROFILES"
-    log "launcher_profiles.json updated."
+    if [ -n "$JAVA_ARGS" ]; then
+      log "launcher_profiles.json updated (tier '$TIER': javaArgs -Xmx${T_XMX})."
+    else
+      log "launcher_profiles.json updated."
+    fi
   else
     warn "Failed to update launcher_profiles.json; skipping. Select the ${PROFILE_ID} version manually in TLauncher."
   fi
@@ -405,7 +725,7 @@ else
 fi
 
 # --- E: remove server-only jars ---
-log "[4/9] Removing server-only jars from mods/ (if present)..."
+log "[4/8] Removing server-only jars from mods/ (if present)..."
 for prefix in $SERVER_ONLY_PREFIXES; do
   for f in "$MODS_DIR"/"$prefix"*; do
     if [ -f "$f" ]; then
@@ -415,191 +735,145 @@ for prefix in $SERVER_ONLY_PREFIXES; do
   done
 done
 
-# --- F: obtain the bundled pack jars (skip the zip entirely if already good) ---
-log "[5/9] Obtaining bundled pack jars..."
+# --- F: download + verify every file for this tier from the Modrinth CDN ---
+log "[5/8] Downloading and verifying mods, resourcepack, and shaders (this transfers ~145 MB on a fresh install)..."
+RESOURCEPACKS_DIR="$TARGET_DIR/resourcepacks"
+RESOURCEPACK_DEST="$RESOURCEPACKS_DIR/$RESOURCEPACK_NAME"
+SHADERPACKS_DIR="$TARGET_DIR/shaderpacks"
 
-# The bundled (zip-sourced) subset of the effective manifest excludes the 5
-# author-hosted (Modrinth) jars and the shader-only files (Iris, shader
-# Sodium), since those are fetched independently, not extracted from the zip.
-BUNDLED_MANIFEST="$(printf '%s\n' "$EFFECTIVE_MANIFEST" | while IFS=' ' read -r bfname bsha; do
-  [ -n "$bfname" ] || continue
-  is_author=0
-  for aurl in $AUTHOR_URLS; do
-    [ -n "$aurl" ] || continue
-    if [ "$(basename "$aurl")" = "$bfname" ]; then
-      is_author=1
-      break
-    fi
-  done
-  [ "$is_author" = "1" ] && continue
-  [ "$bfname" = "$IRIS_JAR" ] && continue
-  [ "$bfname" = "$SODIUM_SHADERS_JAR" ] && continue
-  printf '%s %s\n' "$bfname" "$bsha"
-done)"
+# 5a: every mod jar for this tier -> mods/. Read from a temp file (not a pipe) so
+# a download_verify failure aborts the whole script instead of just a subshell.
+printf '%s\n' "$EFFECTIVE_TABLE" > "$TMPDIR_CREATED/effective_table.txt"
+while IFS=' ' read -r dfname dsha durl; do
+  [ -n "$dfname" ] || continue
+  download_verify "$dfname" "$dsha" "$durl" "$MODS_DIR"
+done < "$TMPDIR_CREATED/effective_table.txt"
 
-BUNDLED_ALL_GOOD=1
-printf '%s\n' "$BUNDLED_MANIFEST" | while IFS=' ' read -r bfname bsha; do
-  [ -n "$bfname" ] || continue
-  btarget="$MODS_DIR/$bfname"
-  [ -f "$btarget" ] || { echo "missing"; continue; }
-  [ "$(sha256_of "$btarget")" = "$bsha" ] || echo "mismatch"
-done > "$TMPDIR_CREATED/bundled_check.txt"
-if [ -s "$TMPDIR_CREATED/bundled_check.txt" ]; then
-  BUNDLED_ALL_GOOD=0
+# 5b: the resourcepack -> resourcepacks/ (filename has a space; download_verify quotes it)
+download_verify "$RESOURCEPACK_NAME" "$RESOURCEPACK_SHA256" "$RESOURCEPACK_URL" "$RESOURCEPACKS_DIR"
+
+# 5c: shader stack -- Complementary shaderpack -> shaderpacks/ (pandit/modi only;
+# Iris and Sodium 0.8.7 are part of EFFECTIVE_TABLE above and land in mods/).
+if [ -n "$TIER_SHADERS" ]; then
+  download_verify "$SHADERPACK_ZIP" "$SHADERPACK_SHA256" "$SHADERPACK_URL" "$SHADERPACKS_DIR"
+  log "Shaders installed for '$TIER': Iris, Sodium 0.8.7, Complementary Unbound (shaderpacks/$SHADERPACK_ZIP)."
 fi
 
-if [ "$BUNDLED_ALL_GOOD" = "1" ]; then
-  log "All bundled pack jars already present and verified; skipping pack download."
-else
-  if [ -n "$ZIP_OVERRIDE" ]; then
-    [ -f "$ZIP_OVERRIDE" ] || die "--zip path does not exist: $ZIP_OVERRIDE"
-    PACK_ZIP="$ZIP_OVERRIDE"
-  else
-    PACK_ZIP="$TMPDIR_CREATED/friends-client-pack.zip"
-    log "Downloading pack zip..."
-    fetch "$PACK_ZIP_URL" "$PACK_ZIP"
-  fi
-
-  # Check it looks like a zip (PK magic), not an HTML interstitial page.
-  PACK_MAGIC="$(head -c 2 "$PACK_ZIP" 2>/dev/null || true)"
-  if [ "$PACK_MAGIC" != "PK" ]; then
-    die "Downloaded file at $PACK_ZIP is not a zip (Google Drive may have returned an interstitial page). Download 'Minecraft-Fabric-1.21.11-Friends-Client-Pack.zip' manually from https://drive.google.com/file/d/1xrjCldCkGCgfdKuBf9tUxS_N4Sfqz-FE/view and re-run with --zip /path/to/file.zip"
-  fi
-
-  if [ -z "$ZIP_OVERRIDE" ]; then
-    PACK_ACTUAL_SHA256="$(sha256_of "$PACK_ZIP")"
-    if [ "$PACK_ACTUAL_SHA256" != "$PACK_ZIP_SHA256" ]; then
-      die "SHA-256 mismatch for downloaded pack zip: expected $PACK_ZIP_SHA256, got $PACK_ACTUAL_SHA256. Download 'Minecraft-Fabric-1.21.11-Friends-Client-Pack.zip' manually from https://drive.google.com/file/d/1xrjCldCkGCgfdKuBf9tUxS_N4Sfqz-FE/view and re-run with --zip /path/to/file.zip"
-    fi
-  else
-    log "Note: --zip provided; skipping the built-in Google Drive hash check (verifying via final per-jar manifest instead)."
-  fi
-
-  EXTRACT_DIR="$TMPDIR_CREATED/extracted"
-  mkdir -p "$EXTRACT_DIR"
-
-  if command -v unzip >/dev/null 2>&1; then
-    unzip -q -o "$PACK_ZIP" -d "$EXTRACT_DIR"
-  elif command -v bsdtar >/dev/null 2>&1; then
-    bsdtar -xf "$PACK_ZIP" -C "$EXTRACT_DIR"
-  elif tar --version 2>/dev/null | grep -qi bsd; then
-    tar -xf "$PACK_ZIP" -C "$EXTRACT_DIR"
-  else
-    die "No zip extraction tool found (need unzip, bsdtar, or a BSD tar). Please install unzip and re-run."
-  fi
-
-  SRC_MODS_DIR="$EXTRACT_DIR/$PACK_DIR_IN_ZIP"
-  [ -d "$SRC_MODS_DIR" ] || die "Expected directory '$PACK_DIR_IN_ZIP' not found inside the pack zip"
-
-  for jar in "$SRC_MODS_DIR"/*.jar; do
-    [ -f "$jar" ] || continue
-    cp "$jar" "$MODS_DIR/"
-  done
-  log "Bundled pack jars copied to mods/."
-fi
-
-# --- G: 5 author-hosted jars ---
-log "[6/9] Downloading author-hosted jars from Modrinth CDN..."
-for url in $AUTHOR_URLS; do
-  [ -n "$url" ] || continue
-  fname="$(basename "$url")"
-  dest="$MODS_DIR/$fname"
-
-  expected_sha="$(printf '%s' "$MANIFEST" | awk -v f="$fname" '$1==f{print $2}')"
-  [ -n "$expected_sha" ] || die "No manifest entry for expected author-hosted jar: $fname"
-
-  if [ -f "$dest" ]; then
-    existing_sha="$(sha256_of "$dest")"
-    if [ "$existing_sha" = "$expected_sha" ]; then
-      log "Already present and verified: $fname"
-      continue
-    fi
-  fi
-
-  log "Downloading: $fname"
-  part="$dest.part"
-  fetch "$url" "$part"
-  actual_sha="$(sha256_of "$part")"
-  if [ "$actual_sha" != "$expected_sha" ]; then
-    rm -f "$part"
-    die "SHA-256 mismatch for $fname: expected $expected_sha, got $actual_sha (url: $url)"
-  fi
-  mv "$part" "$dest"
-done
-
-# --- G.5: optional shaders (--shaders, or sticky-detected): Iris + Sodium 0.8.7 + a shader pack ---
-if [ -n "$SHADERS" ]; then
-  log "[6b/9] Installing shaders (Iris + Sodium 0.8.7 + Complementary Unbound)..."
-
-  OLD_SODIUM="$MODS_DIR/$SODIUM_BASE_JAR"
-  if [ -f "$OLD_SODIUM" ]; then
-    log "Removing base Sodium ($SODIUM_BASE_JAR) -- Iris 1.10.7 requires Sodium 0.8.7"
-    rm -f "$OLD_SODIUM"
-  fi
-
-  iris_dest="$MODS_DIR/$IRIS_JAR"
-  if [ -f "$iris_dest" ] && [ "$(sha256_of "$iris_dest")" = "$IRIS_SHA256" ]; then
-    log "Already present and verified: $IRIS_JAR"
-  else
-    log "Downloading: $IRIS_JAR"
-    part="$iris_dest.part"
-    fetch "$IRIS_URL" "$part"
-    actual_sha="$(sha256_of "$part")"
-    if [ "$actual_sha" != "$IRIS_SHA256" ]; then
-      rm -f "$part"
-      die "SHA-256 mismatch for $IRIS_JAR: expected $IRIS_SHA256, got $actual_sha (url: $IRIS_URL)"
-    fi
-    mv "$part" "$iris_dest"
-  fi
-
-  sodium_dest="$MODS_DIR/$SODIUM_SHADERS_JAR"
-  if [ -f "$sodium_dest" ] && [ "$(sha256_of "$sodium_dest")" = "$SODIUM_SHADERS_SHA256" ]; then
-    log "Already present and verified: $SODIUM_SHADERS_JAR"
-  else
-    log "Downloading: $SODIUM_SHADERS_JAR"
-    part="$sodium_dest.part"
-    fetch "$SODIUM_SHADERS_URL" "$part"
-    actual_sha="$(sha256_of "$part")"
-    if [ "$actual_sha" != "$SODIUM_SHADERS_SHA256" ]; then
-      rm -f "$part"
-      die "SHA-256 mismatch for $SODIUM_SHADERS_JAR: expected $SODIUM_SHADERS_SHA256, got $actual_sha (url: $SODIUM_SHADERS_URL)"
-    fi
-    mv "$part" "$sodium_dest"
-  fi
-
-  SHADERPACKS_DIR="$TARGET_DIR/shaderpacks"
-  mkdir -p "$SHADERPACKS_DIR"
-  shaderpack_dest="$SHADERPACKS_DIR/$SHADERPACK_ZIP"
-  if [ -f "$shaderpack_dest" ] && [ "$(sha256_of "$shaderpack_dest")" = "$SHADERPACK_SHA256" ]; then
-    log "Already present and verified: $SHADERPACK_ZIP"
-  else
-    log "Downloading: $SHADERPACK_ZIP"
-    part="$shaderpack_dest.part"
-    fetch "$SHADERPACK_URL" "$part"
-    actual_sha="$(sha256_of "$part")"
-    if [ "$actual_sha" != "$SHADERPACK_SHA256" ]; then
-      rm -f "$part"
-      die "SHA-256 mismatch for $SHADERPACK_ZIP: expected $SHADERPACK_SHA256, got $actual_sha (url: $SHADERPACK_URL)"
-    fi
-    mv "$part" "$shaderpack_dest"
-  fi
-
-  log "Shaders installed: Iris, Sodium 0.8.7, Complementary Unbound shaderpack (shaderpacks/$SHADERPACK_ZIP)."
-fi
-
-# --- G.6: modflared forced-tunnels config (written to both locations modflared reads) ---
-log "[6c/9] Writing modflared forced_tunnels.json..."
+# --- G: modflared forced-tunnels config (written to both locations modflared reads) ---
+log "[6/8] Writing modflared forced_tunnels.json..."
 for d in "$TARGET_DIR/config/modflared" "$TARGET_DIR/modflared"; do
   mkdir -p "$d"
   printf '%s\n' "$FORCED_TUNNELS_JSON" > "$d/forced_tunnels.json"
   log "Wrote $d/forced_tunnels.json"
 done
 
+# --- G.7: tier config ---
+# A tier is always set by this point. Every config path below was verified against
+# the mod jar; mods whose path could not be verified are deliberately left unset.
+if [ -n "$TIER" ]; then
+  log "[7/8] Writing '$TIER' tier config..."
+
+  # options.txt -- vanilla, colon-separated. Merge: replace only the tier keys,
+  # keep every other line byte-identical, append any that are absent.
+  OPTIONS_TXT="$TARGET_DIR/options.txt"
+  _opt_action="$(config_action "$OPTIONS_TXT")"
+  printf '%s\n' "renderDistance $T_RENDER_DISTANCE
+simulationDistance $T_SIM_DISTANCE
+graphicsMode $T_GRAPHICS
+particles $T_PARTICLES
+mipmapLevels $T_MIPMAP
+biomeBlendRadius $T_BIOME_BLEND
+maxFps $T_MAXFPS
+entityShadows $T_ENTITY_SHADOWS
+ao $T_AO
+entityDistanceScaling $T_ENTITY_DIST_SCALE" | merge_kv_file "$OPTIONS_TXT" ":"
+  log "options.txt ($TIER, $_opt_action): renderDistance=$T_RENDER_DISTANCE simulationDistance=$T_SIM_DISTANCE graphicsMode=$T_GRAPHICS particles=$T_PARTICLES mipmapLevels=$T_MIPMAP biomeBlendRadius=$T_BIOME_BLEND maxFps=$T_MAXFPS entityShadows=$T_ENTITY_SHADOWS ao=$T_AO entityDistanceScaling=$T_ENTITY_DIST_SCALE"
+
+  # Enable the Presence Footsteps resourcepack (all tiers) -- copying it does not
+  # switch it on. Merged into resourcePacks so a friend's enabled packs are kept.
+  enable_resourcepack "$OPTIONS_TXT" "file/$RESOURCEPACK_NAME"
+  log "options.txt ($TIER): resourcePacks += \"file/$RESOURCEPACK_NAME\""
+
+  # Sodium -- config/sodium-options.json. GSON field naming is
+  # LOWER_CASE_WITH_UNDERSCORES, so the JSON keys are snake_case (NOT the Java
+  # field names). Only confirmed primitive fields; no enum-valued fields.
+  SODIUM_JSON="$TARGET_DIR/config/sodium-options.json"
+  _sod_action="$(config_action "$SODIUM_JSON")"
+  if json_merge "$SODIUM_JSON" "{\"performance\":{\"chunk_builder_threads\":0,\"use_entity_culling\":true,\"use_fog_occlusion\":true,\"use_block_face_culling\":true,\"animate_only_visible_textures\":$T_SODIUM_ANIMATE_VISIBLE_ONLY},\"advanced\":{\"cpu_render_ahead_limit\":$T_SODIUM_RENDER_AHEAD},\"quality\":{\"hidden_fluid_culling\":true}}"; then
+    log "config/sodium-options.json ($TIER, $_sod_action): animate_only_visible_textures=$T_SODIUM_ANIMATE_VISIBLE_ONLY cpu_render_ahead_limit=$T_SODIUM_RENDER_AHEAD + culling on"
+  fi
+
+  # Sound Physics Remastered -- config/soundphysics.properties, key "enabled".
+  SOUNDPHYSICS_PROPS="$TARGET_DIR/config/soundphysics.properties"
+  _sp_action="$(config_action "$SOUNDPHYSICS_PROPS")"
+  printf '%s\n' "enabled $T_SOUND_PHYSICS" | merge_kv_file "$SOUNDPHYSICS_PROPS" "="
+  log "config/soundphysics.properties ($TIER, $_sp_action): enabled=$T_SOUND_PHYSICS"
+
+  # Continuity -- config/continuity.json. Turning it "off" disables both
+  # connected and emissive textures; "on" enables them.
+  CONTINUITY_JSON="$TARGET_DIR/config/continuity.json"
+  _cont_action="$(config_action "$CONTINUITY_JSON")"
+  if json_merge "$CONTINUITY_JSON" "{\"connected_textures\":$T_CONTINUITY,\"emissive_textures\":$T_CONTINUITY}"; then
+    log "config/continuity.json ($TIER, $_cont_action): connected_textures=$T_CONTINUITY emissive_textures=$T_CONTINUITY"
+  fi
+
+  # 3D Skin Layers -- config/skinlayers.json. No single master toggle; the 3D
+  # layers are the per-body-part flags, so "off" clears them all, "on" sets them.
+  SKINLAYERS_JSON="$TARGET_DIR/config/skinlayers.json"
+  _skin_action="$(config_action "$SKINLAYERS_JSON")"
+  if json_merge "$SKINLAYERS_JSON" "{\"enableHat\":$T_SKINLAYERS,\"enableJacket\":$T_SKINLAYERS,\"enableLeftSleeve\":$T_SKINLAYERS,\"enableRightSleeve\":$T_SKINLAYERS,\"enableLeftPants\":$T_SKINLAYERS,\"enableRightPants\":$T_SKINLAYERS}"; then
+    log "config/skinlayers.json ($TIER, $_skin_action): all 3D layer parts=$T_SKINLAYERS"
+  fi
+
+  # LambDynamicLights -- config/lambdynlights.toml, key "mode" (a quoted enum string).
+  # The ONLY valid values are fastest / fast / fancy -- there is no "off" (confirmed
+  # against DynamicLightsMode in the 4.9.1 jar). Writing "off" is an invalid enum that
+  # silently falls back to the default (fancy), leaving lights ON. To disable dynamic
+  # lighting for dalit we set the cheapest valid mode AND turn off every source in the
+  # [light_sources] table. pandit/modi keep mode="fancy" with the mod's default sources.
+  LAMBDYN_TOML="$TARGET_DIR/config/lambdynlights.toml"
+  _lamb_action="$(config_action "$LAMBDYN_TOML")"
+  set_toml_string "$LAMBDYN_TOML" "mode" "$T_LAMBDYN"
+  if [ "$TIER" = "dalit" ]; then
+    set_lambdyn_lights_off "$LAMBDYN_TOML"
+    log "config/lambdynlights.toml ($TIER, $_lamb_action): mode=\"$T_LAMBDYN\" + all [light_sources] disabled"
+  else
+    log "config/lambdynlights.toml ($TIER, $_lamb_action): mode=\"$T_LAMBDYN\""
+  fi
+
+  # NOTE: Cull Leaves (config/cullleaves.json, key "enabled") and ImmediatelyFast
+  # are ON for every tier. Cull Leaves defaults to enabled and ImmediatelyFast
+  # has no master enable field (it is a pure optimizer, active once installed),
+  # so neither needs a written config -- installing the jar is "on".
+
+  # Iris (pandit/modi only) -- point it at the shaderpack, enable it, and set the
+  # tier's Complementary profile. Iris stores the selected pack in
+  # config/iris.properties (java.util.Properties) and per-shaderpack options --
+  # including the profile -- in shaderpacks/<shaderPack>.txt, where <shaderPack> is
+  # exactly the iris.properties "shaderPack" value (the .zip name for a zip pack).
+  # Confirmed against the Iris jar: Iris.class resolves
+  # getShaderpacksDirectory().resolve(name + ".txt") and reads "profile" via
+  # queueShaderPackOptionsFromProperties.
+  if [ -n "$TIER_SHADERS" ]; then
+    IRIS_PROPERTIES="$TARGET_DIR/config/iris.properties"
+    _iris_action="$(config_action "$IRIS_PROPERTIES")"
+    printf '%s\n' "shaderPack $SHADERPACK_ZIP
+enableShaders true" | merge_kv_file "$IRIS_PROPERTIES" "="
+    log "config/iris.properties ($TIER, $_iris_action): shaderPack=$SHADERPACK_ZIP, enableShaders=true"
+
+    SHADERPACK_OPTIONS_TXT="$SHADERPACKS_DIR/$SHADERPACK_ZIP.txt"
+    _prof_action="$(config_action "$SHADERPACK_OPTIONS_TXT")"
+    printf '%s\n' "profile $T_COMP_PROFILE" | merge_kv_file "$SHADERPACK_OPTIONS_TXT" "="
+    log "shaderpacks/$SHADERPACK_ZIP.txt ($TIER, $_prof_action): profile=$T_COMP_PROFILE"
+  fi
+fi
+
 # --- H: verify all mod jars ---
-# Without shaders: 24 jars, Sodium 0.8.14-beta.2.
-# With shaders: 25 jars in mods/ (Sodium swapped to 0.8.7, plus Iris); the
-# shaderpack zip lives in shaderpacks/ and is verified separately above.
-log "[7/9] Verifying all ${EXPECTED_JAR_COUNT} mod jars by SHA-256..."
+# dalit: 37 jars, Sodium 0.8.14-beta.2.
+# pandit/modi: 38 jars in mods/ (Sodium swapped to 0.8.7, plus Iris); the shaderpack
+# zip lives in shaderpacks/ and was verified on download above. The resourcepack
+# lives in resourcepacks/ and is verified separately below.
+log "[8/8] Verifying all ${EXPECTED_JAR_COUNT} mod jars by SHA-256..."
 
 # --- H.1: hard-fail on duplicate mods (two files for the same mod). This
 # must run BEFORE the exactly-one-Sodium cleanup below, so a duplicate that
@@ -651,11 +925,11 @@ for prefix in $KNOWN_MOD_PREFIXES; do
   fi
 done
 
-# --- H.2: guarantee exactly one Sodium jar before the manifest check. This
-# is the only automatic removal in the gate; it only ever runs on the state
-# our own mode-switch logic (--shaders/--no-shaders/sticky detection) leaves
-# behind, since H.1 above already aborted on any duplicate a user introduced
-# by hand. ---
+# --- H.2: guarantee exactly one Sodium jar before the manifest check. The
+# expected build is tier-decided (dalit -> 0.8.14-beta.2, pandit/modi -> 0.8.7).
+# This is the only automatic removal in the gate; it only ever runs on the state
+# our own tier logic leaves behind, since H.1 above already aborted on any
+# duplicate a user introduced by hand. ---
 for f in "$MODS_DIR"/sodium-fabric-*.jar; do
   [ -f "$f" ] || continue
   bn="$(basename "$f")"
@@ -692,15 +966,26 @@ if [ -n "$MISSING" ] || [ -n "$MISMATCHED" ]; then
   die "Mod jar verification failed. See errors above."
 fi
 
-log "[8/9] All ${EXPECTED_JAR_COUNT} mod jars verified."
+# --- H.4: verify the resourcepack (same SHA-256 gate as the jars) ---
+if [ ! -f "$RESOURCEPACK_DEST" ]; then
+  die "Missing resourcepack in $RESOURCEPACKS_DIR: $RESOURCEPACK_NAME"
+fi
+RP_ACTUAL_SHA256="$(sha256_of "$RESOURCEPACK_DEST")"
+if [ "$RP_ACTUAL_SHA256" != "$RESOURCEPACK_SHA256" ]; then
+  die "SHA-256 mismatch for resourcepack '$RESOURCEPACK_NAME': expected $RESOURCEPACK_SHA256, got $RP_ACTUAL_SHA256"
+fi
+
+log "All ${EXPECTED_JAR_COUNT} mod jars + the resourcepack verified."
 
 # --- I: final summary ---
-log "[9/9] Install complete."
+log "Install complete."
 log "Game directory: $TARGET_DIR"
 log "Select this version in your launcher: $PROFILE_ID"
-log "Verified jar count: $VERIFIED_COUNT / $EXPECTED_JAR_COUNT"
-if [ -n "$SHADERS" ]; then
-  log "Shaders enabled: Iris + Sodium 0.8.7 + Complementary Unbound (shaderpacks/$SHADERPACK_ZIP)."
+log "Verified jar count: $VERIFIED_COUNT / $EXPECTED_JAR_COUNT (+ 1 resourcepack)"
+if [ -n "$TIER_SHADERS" ]; then
+  log "Tier applied: $TIER (RAM -Xmx${T_XMX}; shaders ON: Iris + Sodium 0.8.7 + Complementary $T_COMP_PROFILE)."
+else
+  log "Tier applied: $TIER (RAM -Xmx${T_XMX}; no shaders, Sodium 0.8.14-beta.2)."
 fi
 log "Reminder: do not add OptiFine — Sodium is included."
 
