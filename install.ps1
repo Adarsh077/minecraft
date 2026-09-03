@@ -90,6 +90,12 @@ StorageDrawers-fabric-1.21.11-20.0.0.jar 5910484b2ad3813094600a229ef95bc6947cfe3
 TerraBlender-fabric-1.21.11-21.11.0.0.jar 3f0567c194d579677b42dd57eeb912e4e558ca069f4fc525213d182e60113772 https://cdn.modrinth.com/data/kkmrDlKT/versions/chxo508B/TerraBlender-fabric-1.21.11-21.11.0.0.jar
 travelersbackpack-fabric-1.21.11-10.11.10.jar d9f42b1bafd29d84fd97b5b6e51c948f0ed7d1251c0deed40e512870ea5980fb https://cdn.modrinth.com/data/rlloIFEV/versions/LfmQsEdR/travelersbackpack-fabric-1.21.11-10.11.10.jar
 voxelmap-fabric-1.21.11-1.15.13.jar 1fe8ed68c671a6c4a80e064a8178102d674df0bec7aebb06bb857aafadf2d0a7 https://cdn.modrinth.com/data/wkzK5379/versions/tRdGJKGE/voxelmap-fabric-1.21.11-1.15.13.jar
+waystones-fabric-1.21.11-21.11.9.jar 6ce002c05655969f528dc1a1eb335a567caa6eaaf95715a86770a066b693f470 https://cdn.modrinth.com/data/LOpKHB2A/versions/MydMW2TT/waystones-fabric-1.21.11-21.11.9.jar
+BiomesOPlenty-fabric-1.21.11-21.11.0.32.jar 89d39707bc095516ba1bf4f162628dfba51dd58a3bcac14c74a14ffefc18f00a https://cdn.modrinth.com/data/HXF82T3G/versions/JJKbM72H/BiomesOPlenty-fabric-1.21.11-21.11.0.32.jar
+mdm-26.7.0-fabric-1.21.11.jar dded3b56d982410de040d7e0c3f3e068876f126bc4077c9a426d90f1695abe0b https://cdn.modrinth.com/data/TmUXSYKk/versions/q1Kv9EdP/mdm-26.7.0-fabric-1.21.11.jar
+balm-fabric-1.21.11-21.11.9.1.jar e957283fcf3d1a3bc1a832db74fa80b03b770eb61d2875de644e66da84bb0390 https://cdn.modrinth.com/data/MBAkmtvl/versions/5POKgjJn/balm-fabric-1.21.11-21.11.9.1.jar
+GlitchCore-fabric-1.21.11-21.11.0.4.jar 8c5b3912d167640f1911982781578ccfb3fbb11e73fcee319c7ff44045a6e8ef https://cdn.modrinth.com/data/s3dmwKy5/versions/CO7NeLTt/GlitchCore-fabric-1.21.11-21.11.0.4.jar
+architectury-19.0.1-fabric.jar 661395d6f0bef0d3a794e2db74df5600c7387ba6fb946b172315977201a667c7 https://cdn.modrinth.com/data/lhGA9TYQ/versions/uNdfrcQ8/architectury-19.0.1-fabric.jar
 "@
 
 # --- known mod-name prefixes, used for duplicate-mod detection ---
@@ -102,7 +108,8 @@ $KnownModPrefixes = @(
     "expanded_weaponry-", "animal_feeding_trough-", "connectiblechains-", "voxelmap-fabric-",
     "entity_texture_features-", "ImmediatelyFast-Fabric-", "sound-physics-remastered-fabric-",
     "skinlayers3d-fabric-", "lambdynamiclights-", "AmbientSounds_FABRIC_", "CreativeCore_FABRIC_",
-    "PresenceFootsteps-", "cullleaves-fabric-", "continuity-", "cloth-config-", "midnightlib-fabric-"
+    "PresenceFootsteps-", "cullleaves-fabric-", "continuity-", "cloth-config-", "midnightlib-fabric-",
+    "waystones-fabric-", "BiomesOPlenty-fabric-", "mdm-", "balm-fabric-", "GlitchCore-fabric-", "architectury-"
 )
 
 function Write-Log($msg) {
@@ -443,10 +450,10 @@ foreach ($rawLine in ($ModsTable -split "`n")) {
 if ($T_Shaders) {
     $EffectiveRows += ,@($SodiumShadersJar, $SodiumShadersSha256, $SodiumShadersUrl)
     $EffectiveRows += ,@($IrisJar, $IrisSha256, $IrisUrl)
-    $ExpectedJarCount = 38
+    $ExpectedJarCount = 44
     $ExpectedSodiumJar = $SodiumShadersJar
 } else {
-    $ExpectedJarCount = 37
+    $ExpectedJarCount = 43
     $ExpectedSodiumJar = $SodiumBaseJar
 }
 
