@@ -344,20 +344,26 @@ download_verify() {
 merge_kv_file() {
   _mkv_file="$1"
   _mkv_sep="$2"
-  _mkv_pairs="$(cat)"
+  # Pairs are staged through a file (not an awk -v value): macOS/BSD awk hard-errors
+  # ("newline in string ... at source line 1") on a -v value containing a literal
+  # newline, which every multi-pair caller here (e.g. options.txt's tier settings)
+  # produces. GNU awk tolerates it, so this only breaks on macOS. A file read via
+  # getline works identically on every awk.
+  _mkv_pairs_file="$_mkv_file.pairs.$$"
+  cat > "$_mkv_pairs_file"
   mkdir -p "$(dirname "$_mkv_file")"
   [ -f "$_mkv_file" ] || : > "$_mkv_file"
   _mkv_tmp="$_mkv_file.tmp.$$"
-  awk -v sep="$_mkv_sep" -v pairs="$_mkv_pairs" '
+  awk -v sep="$_mkv_sep" -v pairs_file="$_mkv_pairs_file" '
     BEGIN {
-      n = split(pairs, lines, "\n")
-      for (i = 1; i <= n; i++) {
-        if (lines[i] == "") continue
-        p = index(lines[i], " ")
-        k = substr(lines[i], 1, p - 1)
-        v = substr(lines[i], p + 1)
+      while ((getline line < pairs_file) > 0) {
+        if (line == "") continue
+        p = index(line, " ")
+        k = substr(line, 1, p - 1)
+        v = substr(line, p + 1)
         key[k] = v
       }
+      close(pairs_file)
     }
     {
       handled = 0
@@ -372,6 +378,7 @@ merge_kv_file() {
       for (k in key) if (!seen[k]) print k sep key[k]
     }
   ' "$_mkv_file" > "$_mkv_tmp" && mv "$_mkv_tmp" "$_mkv_file"
+  rm -f "$_mkv_pairs_file"
 }
 
 # --- helper: set a quoted-string key in a TOML file (create if absent) ---
